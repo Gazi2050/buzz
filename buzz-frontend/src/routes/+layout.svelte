@@ -1,6 +1,7 @@
-<script lang="ts">
-	import '../app.css';
+<script>
+	import Frontpage from "$lib/Frontpage.svelte";
+	import "../app.css";
 	let { children } = $props();
 </script>
 
-{@render children()}
+<Frontpage>{@render children()}</Frontpage>
