@@ -1,4 +1,6 @@
 <script>
+    import FrontLoading from "@components/FrontLoading.svelte";
+
     let { children } = $props();
     let isLoading = $state(true);
 
@@ -12,7 +14,7 @@
 </script>
 
 {#if isLoading}
-    <p>Loading component...</p>
+    <FrontLoading />
 {:else}
     {@render children()}
 {/if}

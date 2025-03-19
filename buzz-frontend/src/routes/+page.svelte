@@ -1,4 +1,5 @@
 <script>
+    import FrontLoading from "@components/FrontLoading.svelte";
 </script>
 
-<p>This is buzz</p>
+<h1>buzz</h1>

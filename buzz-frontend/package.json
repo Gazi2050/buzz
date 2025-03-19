@@ -30,6 +30,7 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
-		"path": "^0.12.7"
+		"path": "^0.12.7",
+		"svelte-typewriter": "^3.2.3"
 	}
 }
