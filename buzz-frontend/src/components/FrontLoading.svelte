@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import Typewriter from "svelte-typewriter";
 </script>
 

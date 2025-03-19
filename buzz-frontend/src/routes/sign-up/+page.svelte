@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
+    import type { Auth } from "$lib/type";
     import AuthForm from "@components/AuthForm.svelte";
     let username = "";
     let password = "";
 
-    // @ts-ignore
-    function handleSubmit({ username, password }) {
+    function handleSubmit({ username, password }: Auth) {
         console.log("Sign Up submitted:", { username, password });
     }
 </script>

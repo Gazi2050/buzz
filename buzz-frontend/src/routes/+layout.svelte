@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Frontpage from "$lib/Frontpage.svelte";
 	import "../app.css";
 	let { children } = $props();

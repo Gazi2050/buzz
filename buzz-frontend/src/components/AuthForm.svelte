@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import Button from "./Button.svelte";
     import { inputClass } from "$lib/Class";
     import { Eye, EyeOff } from "lucide-svelte";

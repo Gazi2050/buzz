@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     let { type, text = "Button", disabled = false } = $props();
 </script>
 
