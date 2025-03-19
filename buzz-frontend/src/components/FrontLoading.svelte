@@ -5,7 +5,9 @@
 <div
     class="flex flex-col justify-center items-center h-screen gap-3 select-none"
 >
-    <div class="text-6xl font-bold bg-black text-[#6AFF33] p-3 rounded-lg">
+    <div
+        class="text-6xl font-bold bg-black text-[#6AFF33] px-3 pb-[9px] rounded-lg"
+    >
         Buzz
     </div>
     <Typewriter>
