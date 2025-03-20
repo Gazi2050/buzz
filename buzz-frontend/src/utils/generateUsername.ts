@@ -1,5 +1,6 @@
-const apiUrl = import.meta.env.VITE_USERNAME_GENERATE_API_URL;
-const apiKey = import.meta.env.VITE_USERNAME_GENERATE_API_KEY;
+
+const apiUrl = import.meta.env.USERNAME_GENERATE_API_URL;
+const apiKey = import.meta.env.USERNAME_GENERATE_API_KEY;
 
 export async function generateUsername(): Promise<string> {
     try {
