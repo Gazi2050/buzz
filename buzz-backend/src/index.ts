@@ -1,8 +1,8 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { MongoClient, ServerApiVersion } from 'mongodb'
-import 'dotenv/config'
 import { cors } from 'hono/cors'
+import 'dotenv/config'
 
 const app = new Hono()
 
@@ -14,10 +14,9 @@ app.use('*', cors({
 }))
 
 app.get('/', (c) => {
-  return c.text('Hello Hono!')
+  return c.text('hello buzz')
 })
 
-// Start the server properly
 serve({
   fetch: app.fetch,
   port: 3000
@@ -40,16 +39,48 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
+const db = client.db('buzz')
+const userCollection = db.collection('users')
+
+/*users api*/
+//GET
+app.get('/users', async (c) => {
+  try {
+    const users = await userCollection.find().toArray()
+    return c.json(users)
+  } catch (error) {
+    console.error('Error fetching users:', error)
+    return c.json({ error: 'Failed to fetch users' }, 500)
+  }
+})
+
+
+//POST
+app.post('/users', async (c) => {
+  try {
+    const user = await c.req.json()
+    const query = { username: user.username }
+    const existingUser = await userCollection.findOne(query)
+
+    if (existingUser) {
+      return c.json({ message: 'User already exists', insertedId: null }, 409)
+    }
+
+    const result = await userCollection.insertOne(user)
+    return c.json(result, 201)
+  } catch (error) {
+    console.error('Error inserting user:', error)
+    return c.json({ error: 'Failed to insert user' }, 500)
+  }
+})
 
 async function run() {
   try {
     await client.connect()
     await client.db('admin').command({ ping: 1 })
-    console.log('Pinged your deployment. Successfully connected to MongoDB!')
+    console.log('✅ MongoDB Connected Successfully')
   } catch (err) {
-    console.error('MongoDB connection error:', err)
-  } finally {
-    await client.close()
+    console.error("❌ MongoDB Connection Error:", err)
   }
 }
 
