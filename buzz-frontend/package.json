@@ -30,8 +30,10 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
+		"@tanstack/svelte-query": "^5.69.0",
 		"lucide-svelte": "^0.483.0",
 		"path": "^0.12.7",
+		"svelte-sonner": "^0.3.28",
 		"svelte-typewriter": "^3.2.3"
 	}
 }

@@ -1,7 +1,7 @@
+import { env } from "$env/dynamic/public";
 
-const apiUrl = import.meta.env.USERNAME_GENERATE_API_URL;
-const apiKey = import.meta.env.USERNAME_GENERATE_API_KEY;
-
+const apiUrl = env.PUBLIC_USERNAME_GENERATE_API_URL;
+const apiKey = env.PUBLIC_USERNAME_GENERATE_API_KEY;
 export async function generateUsername(): Promise<string> {
     try {
         const response = await fetch(apiUrl, {

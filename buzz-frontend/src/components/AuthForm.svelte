@@ -1,7 +1,9 @@
 <script lang="ts">
     import Button from "./Button.svelte";
-    import { inputClass } from "$lib/Class";
-    import { Eye, EyeOff } from "lucide-svelte";
+    import { autofillStyle, inputClass } from "$lib/Class";
+    import { Eye, EyeOff, Loader } from "lucide-svelte";
+    import { generateUsername } from "@utils/generateUsername";
+    import { generatePassword } from "@utils/generatePassword";
 
     let {
         authType = "signup",
@@ -12,6 +14,25 @@
 
     let isShow = $state(false);
     let isSignUp = $derived(authType === "signup");
+    let isLoading = $state(false);
+
+    async function handleGenerate() {
+        isLoading = true;
+        try {
+            username = await generateUsername();
+        } finally {
+            isLoading = false;
+        }
+    }
+
+    function handleGeneratePassword() {
+        password = generatePassword();
+    }
+
+    function handleSubmit(event: Event) {
+        event.preventDefault();
+        onSubmit({ username, password });
+    }
 </script>
 
 <div class="flex items-center justify-center min-h-screen bg-gray-50">
@@ -35,27 +56,42 @@
             </p>
         </div>
 
-        <form
-            class="space-y-4"
-            onsubmit={() => onSubmit({ username, password })}
-        >
-            <!-- Username (only for signup) -->
+        <form class="space-y-4" onsubmit={handleSubmit}>
+            <!-- Username -->
             <div class="space-y-2">
                 <label
                     for="username"
                     class="block text-sm md:text-base font-medium text-gray-700"
-                    >Username</label
                 >
+                    Username
+                </label>
                 <div class="flex items-center gap-2">
-                    <input
-                        type="text"
-                        class={inputClass}
-                        placeholder="Enter Username"
-                        id="username"
-                        bind:value={username}
-                    />
+                    <div
+                        class={`${inputClass} flex justify-between items-center pr-2`}
+                    >
+                        <input
+                            type="text"
+                            class="outline-none placeholder:text-gray-400 flex-1 border-none"
+                            placeholder="Enter Username"
+                            id="username"
+                            bind:value={username}
+                            disabled={isLoading}
+                            style={autofillStyle}
+                        />
+
+                        {#if isLoading}
+                            <Loader
+                                class="text-gray-400 animate-spin w-5 h-5"
+                            />
+                        {/if}
+                    </div>
                     {#if isSignUp}
-                        <Button text="Generate" type="button" />
+                        <Button
+                            text="Generate"
+                            type="button"
+                            onclick={handleGenerate}
+                            disabled={isLoading}
+                        />
                     {/if}
                 </div>
             </div>
@@ -77,6 +113,7 @@
                             placeholder="Enter Password"
                             id="password"
                             bind:value={password}
+                            style={autofillStyle}
                         />
                         <button
                             type="button"
@@ -90,7 +127,11 @@
                         </button>
                     </div>
                     {#if isSignUp}
-                        <Button text="Generate" type="button" />
+                        <Button
+                            text="Generate"
+                            type="button"
+                            onclick={handleGeneratePassword}
+                        />
                     {/if}
                 </div>
             </div>
@@ -110,11 +151,3 @@
         </p>
     </div>
 </div>
-
-<!-- example use
- <AuthForm 
-    authType="signup" 
-    {username} 
-    {password} 
-    onSubmit={handleSignUp} 
-/> -->
