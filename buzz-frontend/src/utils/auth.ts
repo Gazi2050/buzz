@@ -1,11 +1,13 @@
 // src/utils/auth.ts
+import { goto } from "$app/navigation";
 import { env } from "$env/dynamic/public";
 import { currentUser, isAuthenticated } from "$lib/authStore";
 import type { Auth } from "$lib/type";
+import { toast } from "svelte-sonner";
 
 const API_URL = env.PUBLIC_USER_API;
 
-// Sign Up: Post user data to backend
+// Sign Up
 export async function signup(credentials: Auth): Promise<boolean> {
     try {
         const response = await fetch(API_URL, {
@@ -27,7 +29,7 @@ export async function signup(credentials: Auth): Promise<boolean> {
     }
 }
 
-// Sign In: Check if user exists
+// Sign In
 export async function signin(credentials: Auth): Promise<{ username: string } | null> {
     try {
         const response = await fetch(`${API_URL}?username=${credentials.username}&password=${credentials.password}`);
@@ -36,17 +38,16 @@ export async function signin(credentials: Auth): Promise<{ username: string } | 
         }
         const users = await response.json();
         if (!Array.isArray(users) || users.length === 0) {
-            return null; // No users found
+            return null;
         }
 
-        // Find a user that matches both username and password
         const matchingUser = users.find(
             (user: { username: string; password: string }) =>
                 user.username === credentials.username && user.password === credentials.password
         );
 
         if (!matchingUser) {
-            return null; // No matching user
+            return null;
         }
 
         return { username: matchingUser.username };
@@ -56,9 +57,10 @@ export async function signin(credentials: Auth): Promise<{ username: string } | 
     }
 }
 
-// Sign Out: Reset auth state using store.set()
+// Sign Out
 export function signout(): void {
-    isAuthenticated.set(false); // Reset authenticated state
-    currentUser.set(null); // Clear current user
-    alert("Signed out successfully!"); // Show browser alert
+    isAuthenticated.set(false);
+    currentUser.set(null);
+    toast("Signed out successfully!");
+    goto("/");
 }

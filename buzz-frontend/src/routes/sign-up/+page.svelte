@@ -4,34 +4,29 @@
     import type { Auth } from "$lib/type";
     import AuthForm from "@components/AuthForm.svelte";
     import { signin, signup } from "@utils/auth";
+    import { toast } from "svelte-sonner";
 
     let username = "";
     let password = "";
-
-    // function handleSubmit({ username, password }: Auth) {
-    //     console.log("Sign Up submitted:", { username, password });
-    // }
 
     async function handleSubmit({ username, password }: Auth) {
         console.log("Sign Up submitted:", { username, password });
         const success = await signup({ username, password });
         if (success) {
-            // Signup successful, now auto-signin
             const user = await signin({ username, password });
             if (user) {
-                $isAuthenticated = true; // Update auth state
+                $isAuthenticated = true;
                 $currentUser = user.username;
-                alert("Signup successful! Welcome, " + user.username);
-                goto("/"); // Redirect to home page
+                toast.success(`Signup successful! Welcome,${user?.username}`);
+                goto("/");
             } else {
-                // This shouldn't happen, but handle it just in case
-                alert(
+                toast.error(
                     "Signup succeeded, but auto-signin failed. Please sign in manually.",
                 );
-                goto("/signin");
+                goto("/sign-in");
             }
         } else {
-            alert(
+            toast.error(
                 "Signup failed. Username might be taken or there was an error.",
             );
         }
