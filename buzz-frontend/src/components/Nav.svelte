@@ -1,15 +1,22 @@
+<script>
+    import { User } from "lucide-svelte";
+</script>
+
 <div
-    class="bg-transparent backdrop-blur-lg flex justify-center items-center fixed top-0 right-0 left-0 py-1"
+    class="bg-transparent backdrop-blur-lg fixed top-0 right-0 left-0 py-4 flex justify-center"
 >
-    <div class="text-center space-y-4">
-        <a
-            href="/"
-            class="text-4xl md:text-5xl font-bold text-[#6AFF33] rounded-lg"
-        >
+    <div
+        class="max-w-[1450px] w-full flex justify-between items-center px-6 md:px-16 lg:px-32"
+    >
+        <a href="/" class="text-4xl lg:text-5xl font-bold text-[#6AFF33]">
             Buzz
         </a>
-        <p class="text-zinc-400 text-lg font-medium">
-            Speak Freely, Stay Anonymous.
-        </p>
+
+        <a
+            href="/"
+            class="flex justify-center items-center rounded-full p-2 bg-[#6AFF33]"
+        >
+            <User class="w-7 h-7 md:w-9 md:h-9 text-black" />
+        </a>
     </div>
 </div>
