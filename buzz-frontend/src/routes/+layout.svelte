@@ -3,7 +3,7 @@
 	import { Toaster } from "svelte-sonner";
 	import "../app.css";
 	import Navbar from "@components/Navbar.svelte";
-	import Nav from "@components/Nav.svelte";
+	import Header from "@components/Header.svelte";
 	import { page } from "$app/stores";
 	let { children } = $props();
 </script>
@@ -11,7 +11,7 @@
 <!-- <Frontpage>{@render children()}</Frontpage> -->
 <div class="bg-zinc-950">
 	{#if $page.url.pathname === "/"}
-		<Nav />
+		<Header />
 	{/if}
 	{@render children()}
 	{#if $page.url.pathname === "/"}
