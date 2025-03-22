@@ -3,10 +3,14 @@
 	import { Toaster } from "svelte-sonner";
 	import "../app.css";
 	import Navbar from "@components/Navbar.svelte";
+	import Nav from "@components/Nav.svelte";
 	let { children } = $props();
 </script>
 
 <!-- <Frontpage>{@render children()}</Frontpage> -->
-{@render children()}
-<Navbar />
-<Toaster position="top-center" richColors />
+<div class="bg-zinc-950">
+	<Nav />
+	{@render children()}
+	<Navbar />
+	<Toaster position="top-center" richColors />
+</div>
