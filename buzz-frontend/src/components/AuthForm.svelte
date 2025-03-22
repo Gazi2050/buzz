@@ -1,6 +1,6 @@
 <script lang="ts">
     import Button from "./Button.svelte";
-    import { autofillStyle, inputClass } from "$lib/Class";
+    import { autofillStyle } from "$lib/Class";
     import { Eye, EyeOff, Loader } from "lucide-svelte";
     import { generateUsername } from "@utils/generateUsername";
     import { generatePassword } from "@utils/generatePassword";
@@ -35,16 +35,16 @@
     }
 </script>
 
-<div class="flex items-center justify-center min-h-screen bg-gray-50">
+<div class="flex items-center justify-center min-h-screen">
     <div
-        class="w-full max-w-sm md:max-w-md lg:max-w-lg p-8 md:p-10 lg:p-12 bg-white rounded-xl shadow-lg space-y-6 border border-green-100"
+        class="w-full max-w-sm md:max-w-md lg:max-w-lg p-8 md:p-10 lg:p-12 bg-black rounded-xl shadow-lg space-y-6 border-t-2 border-l-2 border-green-950"
     >
         <!-- Form Header -->
         <div class="text-center">
-            <h1 class="text-3xl font-semibold text-gray-900 mb-3">
+            <h1 class="text-3xl font-semibold text-white mb-3">
                 {isSignUp ? "Welcome to" : "Welcome Back to"}
                 <span
-                    class="bg-black text-[#6AFF33] px-[5px] pb-[3px] rounded-lg"
+                    class="bg-zinc-800 text-[#6AFF33] px-[5px] pb-[3px] rounded-lg"
                 >
                     Buzz
                 </span>
@@ -61,17 +61,17 @@
             <div class="space-y-2">
                 <label
                     for="username"
-                    class="block text-sm md:text-base font-medium text-gray-700"
+                    class="block text-sm md:text-base font-medium text-gray-500"
                 >
                     Username
                 </label>
                 <div class="flex items-center gap-2">
                     <div
-                        class={`${inputClass} flex justify-between items-center pr-2`}
+                        class="w-full p-2 border bg-zinc-800 border-gray-900 rounded-lg outline-none placeholder:text-gray-400 flex justify-between items-center pr-2"
                     >
                         <input
                             type="text"
-                            class="outline-none placeholder:text-gray-400 flex-1 border-none"
+                            class="outline-none placeholder:text-gray-400 flex-1 border-none text-white"
                             placeholder="Enter Username"
                             id="username"
                             bind:value={username}
@@ -100,16 +100,16 @@
             <div class="space-y-2">
                 <label
                     for="password"
-                    class="block text-sm md:text-base font-medium text-gray-700"
+                    class="block text-sm md:text-base font-medium text-gray-500"
                     >Password</label
                 >
                 <div class="flex items-center gap-2">
                     <div
-                        class={`${inputClass} flex justify-between items-center pr-2`}
+                        class="w-full p-2 border bg-zinc-800 border-gray-900 rounded-lg outline-none placeholder:text-gray-400 flex justify-between items-center pr-2"
                     >
                         <input
                             type={isShow ? "text" : "password"}
-                            class="outline-none placeholder:text-gray-400 flex-1 border-none"
+                            class="outline-none placeholder:text-gray-400 flex-1 border-none text-white"
                             placeholder="Enter Password"
                             id="password"
                             bind:value={password}
@@ -141,11 +141,11 @@
             </div>
         </form>
 
-        <p class="text-center text-gray-600 text-sm md:text-base">
+        <p class="text-center text-gray-500 text-sm md:text-base">
             {isSignUp ? "Already one of us?" : "Not one of us yet?"}
             <a
                 href={isSignUp ? "/sign-in" : "/sign-up"}
-                class="text-green-600 font-medium hover:underline"
+                class="text-[#6AFF33] font-medium hover:underline"
                 >{isSignUp ? "Sign In" : "Sign Up"}</a
             >
         </p>

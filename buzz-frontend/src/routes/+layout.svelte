@@ -4,13 +4,18 @@
 	import "../app.css";
 	import Navbar from "@components/Navbar.svelte";
 	import Nav from "@components/Nav.svelte";
+	import { page } from "$app/stores";
 	let { children } = $props();
 </script>
 
 <!-- <Frontpage>{@render children()}</Frontpage> -->
 <div class="bg-zinc-950">
-	<Nav />
+	{#if $page.url.pathname === "/"}
+		<Nav />
+	{/if}
 	{@render children()}
-	<Navbar />
+	{#if $page.url.pathname === "/"}
+		<Navbar />
+	{/if}
 	<Toaster position="top-center" richColors />
 </div>
