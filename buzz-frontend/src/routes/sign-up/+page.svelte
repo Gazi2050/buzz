@@ -8,10 +8,11 @@
 
     let username = "";
     let password = "";
+    let profileColor = "#6AFF33";
 
     async function handleSubmit({ username, password }: Auth) {
-        console.log("Sign Up submitted:", { username, password });
-        const success = await signup({ username, password });
+        console.log("Sign Up submitted:", { username, password, profileColor });
+        const success = await signup({ username, password, profileColor });
         if (success) {
             const user = await signin({ username, password });
             if (user) {
@@ -33,4 +34,10 @@
     }
 </script>
 
-<AuthForm authType="signup" {password} {username} onSubmit={handleSubmit} />
+<AuthForm
+    authType="signup"
+    bind:username
+    bind:password
+    bind:profileColor
+    onSubmit={handleSubmit}
+/>

@@ -1,14 +1,16 @@
 <script lang="ts">
     import Button from "./Button.svelte";
     import { autofillStyle } from "$lib/Class";
-    import { Eye, EyeOff, Loader } from "lucide-svelte";
+    import { Eye, EyeOff, Loader, User } from "lucide-svelte";
     import { generateUsername } from "@utils/generateUsername";
     import { generatePassword } from "@utils/generatePassword";
+    import { generateHexColor } from "@utils/generateHexColor";
 
     let {
         authType = "signup",
-        username = "",
-        password = "",
+        username = $bindable(""),
+        password = $bindable(""),
+        profileColor = $bindable("#6AFF33"),
         onSubmit = () => {},
     } = $props();
 
@@ -31,7 +33,11 @@
 
     function handleSubmit(event: Event) {
         event.preventDefault();
-        onSubmit({ username, password });
+        onSubmit({ username, password, profileColor });
+    }
+
+    function handleGenerateProfileColor() {
+        profileColor = generateHexColor();
     }
 </script>
 
@@ -135,6 +141,40 @@
                     {/if}
                 </div>
             </div>
+
+            {#if isSignUp}
+                <!-- Profile color -->
+                <div class="space-y-2">
+                    <label
+                        for="profileColor"
+                        class="block text-sm md:text-base font-medium text-gray-500"
+                        >Profile color</label
+                    >
+                    <div class="flex justify-center items-center gap-3">
+                        <div
+                            class="flex justify-center items-center rounded-full p-2"
+                            style="background-color: {profileColor};"
+                        >
+                            <User class="w-7 h-7 text-black" />
+                        </div>
+                        <div class="hidden">
+                            <input
+                                type="text"
+                                readonly
+                                placeholder="Generate profile color"
+                                id="profileColor"
+                                bind:value={profileColor}
+                                style={autofillStyle}
+                            />
+                        </div>
+                        <Button
+                            text="Randomize color"
+                            type="button"
+                            onclick={handleGenerateProfileColor}
+                        />
+                    </div>
+                </div>
+            {/if}
 
             <div class="flex justify-center items-center mt-10">
                 <Button text={isSignUp ? "Sign Up" : "Sign In"} type="submit" />

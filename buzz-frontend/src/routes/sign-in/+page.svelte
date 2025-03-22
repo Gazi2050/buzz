@@ -23,4 +23,4 @@
     }
 </script>
 
-<AuthForm authType="signin" {password} {username} onSubmit={handleSubmit} />
+<AuthForm authType="signin" {username} {password} onSubmit={handleSubmit} />
