@@ -1,10 +1,10 @@
 <script lang="ts">
     import Button from "./Button.svelte";
-    import { autofillStyle } from "$lib/Class";
     import { Eye, EyeOff, Loader, User } from "lucide-svelte";
     import { generateUsername } from "@utils/generateUsername";
     import { generatePassword } from "@utils/generatePassword";
     import { generateHexColor } from "@utils/generateHexColor";
+    import { inputObj } from "$lib/Class";
 
     let {
         authType = "signup",
@@ -43,12 +43,12 @@
 
 <div class="flex items-center justify-center min-h-screen">
     <div
-        class="w-full max-w-sm md:max-w-md lg:max-w-lg p-8 md:p-10 lg:p-12 bg-black rounded-xl shadow-lg space-y-6 border-t-2 border-l-2 border-green-950"
+        class="w-full max-w-sm md:max-w-md lg:max-w-lg p-10 lg:p-14 bg-black rounded-xl shadow-lg space-y-6 border-t-2 border-l-2 border-green-950"
     >
         <!-- Form Header -->
         <div class="text-center">
             <h1 class="text-3xl font-semibold text-white mb-3">
-                {isSignUp ? "Welcome to" : "Welcome Back to"}
+                {isSignUp ? "Welcome to" : "Continue to"}
                 <span
                     class="bg-zinc-800 text-[#6AFF33] px-[5px] pb-[3px] rounded-lg"
                 >
@@ -72,17 +72,16 @@
                     Username
                 </label>
                 <div class="flex items-center gap-2">
-                    <div
-                        class="w-full p-2 border bg-zinc-800 border-gray-900 rounded-lg outline-none placeholder:text-gray-400 flex justify-between items-center pr-2"
-                    >
+                    <div class={inputObj?.outerClass}>
                         <input
                             type="text"
-                            class="outline-none placeholder:text-gray-400 flex-1 border-none text-white"
+                            class={inputObj?.innerClass}
                             placeholder="Enter Username"
                             id="username"
+                            autocomplete="off"
                             bind:value={username}
                             disabled={isLoading}
-                            style={autofillStyle}
+                            required
                         />
 
                         {#if isLoading}
@@ -110,16 +109,15 @@
                     >Password</label
                 >
                 <div class="flex items-center gap-2">
-                    <div
-                        class="w-full p-2 border bg-zinc-800 border-gray-900 rounded-lg outline-none placeholder:text-gray-400 flex justify-between items-center pr-2"
-                    >
+                    <div class={inputObj?.outerClass}>
                         <input
                             type={isShow ? "text" : "password"}
-                            class="outline-none placeholder:text-gray-400 flex-1 border-none text-white"
+                            class={inputObj?.innerClass}
                             placeholder="Enter Password"
                             id="password"
+                            autocomplete="off"
                             bind:value={password}
-                            style={autofillStyle}
+                            required
                         />
                         <button
                             type="button"
@@ -163,8 +161,8 @@
                                 readonly
                                 placeholder="Generate profile color"
                                 id="profileColor"
+                                autocomplete="off"
                                 bind:value={profileColor}
-                                style={autofillStyle}
                             />
                         </div>
                         <Button

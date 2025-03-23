@@ -2,7 +2,7 @@ import { browser } from "$app/environment";
 import { writable } from "svelte/store";
 
 const storedAuth = browser ? localStorage.getItem("isAuthenticated") === "true" : false;
-const storedUser = browser ? localStorage.getItem("currentUser") : null;
+export const storedUser = browser ? localStorage.getItem("currentUser") : null;
 
 export const isAuthenticated = writable(storedAuth);
 export const currentUser = writable<string | null>(storedUser);
