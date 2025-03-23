@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { User } from "lucide-svelte";
 </script>
 
@@ -13,7 +13,7 @@
         </a>
 
         <a
-            href="/"
+            href="/profile"
             class="flex justify-center items-center rounded-full p-2 bg-[#6AFF33]"
         >
             <User class="w-7 h-7 md:w-9 md:h-9 text-black" />
