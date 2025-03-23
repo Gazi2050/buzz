@@ -9,7 +9,7 @@
     let password = "";
 
     async function handleSubmit({ username, password }: Auth) {
-        console.log("Sign In submitted:", { username, password });
+        // console.log("Sign In submitted:", { username, password });
         const user = await signin({ username, password });
         if (user) {
             $isAuthenticated = true;

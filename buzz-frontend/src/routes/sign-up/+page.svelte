@@ -11,7 +11,7 @@
     let profileColor = "#6AFF33";
 
     async function handleSubmit({ username, password }: Auth) {
-        console.log("Sign Up submitted:", { username, password, profileColor });
+        // console.log("Sign Up submitted:", { username, password, profileColor });
         const success = await signup({ username, password, profileColor });
         if (success) {
             const user = await signin({ username, password });
