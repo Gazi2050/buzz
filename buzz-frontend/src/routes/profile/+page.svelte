@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { storedUser } from "$lib/authStore";
     import Loading from "@components/Loading.svelte";
     import Profile from "@components/Profile.svelte";
     import { createQuery } from "@tanstack/svelte-query";
@@ -10,7 +9,10 @@
         queryKey: ["users"],
         queryFn: () => fetchUsers(),
     });
-    console.log(storedUser);
+    $: if ($query.isSuccess && $query.data) {
+        username = $query?.data?.username;
+        profileColor = $query?.data?.profileColor;
+    }
 </script>
 
 {#if $query.isLoading}
