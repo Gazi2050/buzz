@@ -47,7 +47,7 @@
         </div>
         <div class="flex justify-center items-center gap-5 mt-10">
             <Button type="button" text="Edit" />
-            <Button type="button" text="Delete" />
+            <Button type="button" text="Delete Account" color="#ff0303" />
         </div>
     </div>
 </div>
