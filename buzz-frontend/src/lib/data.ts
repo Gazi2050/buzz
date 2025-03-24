@@ -1,0 +1,1 @@
+export const excludedPaths = ["/sign-up", "/sign-in"];

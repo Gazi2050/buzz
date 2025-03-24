@@ -1,5 +1,7 @@
 <script lang="ts">
     import { User } from "lucide-svelte";
+    import Button from "./Button.svelte";
+    import { isAuthenticated } from "$lib/authStore";
 </script>
 
 <div
@@ -11,12 +13,15 @@
         <a href="/" class="text-4xl lg:text-5xl font-bold text-[#6AFF33]">
             Buzz
         </a>
-
-        <a
-            href="/profile"
-            class="flex justify-center items-center rounded-full p-2 bg-[#6AFF33]"
-        >
-            <User class="w-7 h-7 md:w-9 md:h-9 text-black" />
-        </a>
+        {#if $isAuthenticated === true}
+            <a
+                href="/profile"
+                class="flex justify-center items-center rounded-full p-2 bg-[#6AFF33]"
+            >
+                <User class="w-7 h-7 md:w-9 md:h-9 text-black" />
+            </a>
+        {:else}
+            <a href="/sign-in"><Button text="Sign In" type="button" /></a>
+        {/if}
     </div>
 </div>

@@ -3,6 +3,8 @@ import { currentUser, isAuthenticated } from "$lib/authStore";
 import type { Auth } from "$lib/type";
 import { USERS_API_URL } from "$lib/url";
 import { toast } from "svelte-sonner";
+// import { get } from "svelte/store";
+
 
 export async function signup(credentials: Auth): Promise<boolean> {
     try {
@@ -46,6 +48,12 @@ export async function signin(credentials: Auth): Promise<{ username: string } | 
             return null;
         }
 
+        // Update the store with the signed-in user
+        currentUser.set(matchingUser.username);
+        isAuthenticated.set(true);
+
+        // Log the current store value instead of storedUser
+        // console.log(typeof get(currentUser), get(currentUser));
         return { username: matchingUser.username };
     } catch (error) {
         console.error("Signin error:", error);
@@ -58,5 +66,7 @@ export function signout(): void {
     isAuthenticated.set(false);
     currentUser.set(null);
     toast("Signed out successfully!");
+    // Log the current store value instead of storedUser
+    // console.log(typeof get(currentUser), get(currentUser));
     goto("/");
 }

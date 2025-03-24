@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { Bell, House, Layers, Moon, Plus, Sun } from "lucide-svelte";
+    import { signout } from "@utils/auth";
+    import { Bell, House, Layers, LogOut, Plus } from "lucide-svelte";
 </script>
 
 <div
@@ -30,12 +31,12 @@
         >
             <Bell />
         </a>
-        <a
-            href="/"
+        <button
+            onclick={signout}
             class="transition-transform transform hover:scale-125 duration-300 p-[6px] hover:bg-white hover:text-black rounded-full"
         >
             <!-- <Sun /> -->
-            <Moon />
-        </a>
+            <LogOut />
+        </button>
     </div>
 </div>

@@ -5,9 +5,11 @@
 	import Navbar from "@components/Navbar.svelte";
 	import Header from "@components/Header.svelte";
 	import { page } from "$app/stores";
-	import { QueryClientProvider } from "@tanstack/svelte-query";
-	import { QueryClient } from "@tanstack/svelte-query";
+	import { QueryClientProvider, QueryClient } from "@tanstack/svelte-query";
 	import { browser } from "$app/environment";
+	import { excludedPaths } from "$lib/data";
+	import { isAuthenticated } from "$lib/authStore";
+
 	let { children } = $props();
 	const queryClient = new QueryClient({
 		defaultOptions: {
@@ -16,8 +18,6 @@
 			},
 		},
 	});
-
-	const excludedPaths = ["/sign-up", "/sign-in"];
 </script>
 
 <QueryClientProvider client={queryClient}>
@@ -27,7 +27,7 @@
 			<Header />
 		{/if}
 		{@render children()}
-		{#if !excludedPaths.includes($page.url.pathname)}
+		{#if !excludedPaths.includes($page.url.pathname) && $isAuthenticated === true}
 			<Navbar />
 		{/if}
 		<Toaster position="top-center" richColors />
