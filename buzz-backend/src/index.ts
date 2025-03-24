@@ -1,6 +1,6 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import { MongoClient, ServerApiVersion } from 'mongodb'
+import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb'
 import { cors } from 'hono/cors'
 import 'dotenv/config'
 
@@ -42,6 +42,12 @@ const client = new MongoClient(uri, {
 const db = client.db('buzz')
 const userCollection = db.collection('users')
 
+// Middleware to set the userCollection in context
+app.use('*', async (c, next) => {
+  c.set('userCollection', userCollection);
+  await next();
+});
+
 /*users api*/
 //GET
 app.get('/users', async (c) => {
@@ -53,7 +59,6 @@ app.get('/users', async (c) => {
     return c.json({ error: 'Failed to fetch users' }, 500)
   }
 })
-
 
 //POST
 app.post('/users', async (c) => {
@@ -71,6 +76,25 @@ app.post('/users', async (c) => {
   } catch (error) {
     console.error('Error inserting user:', error)
     return c.json({ error: 'Failed to insert user' }, 500)
+  }
+})
+
+//DELETE
+app.delete('/users/:id', async (c) => {
+  try {
+    const userCollection = c.get('userCollection') as any;
+    const id = c.req.param('id');
+
+    if (!ObjectId.isValid(id)) return c.json({ error: 'Invalid user ID' }, 400);
+
+    const result = await userCollection.deleteOne({ _id: new ObjectId(id) });
+
+    return result.deletedCount
+      ? c.json({ message: 'User deleted successfully' })
+      : c.json({ error: 'User not found' }, 404);
+  } catch (error) {
+    console.error('Error deleting user:', error)
+    return c.json({ error: 'Failed to delete user' }, 500)
   }
 })
 
