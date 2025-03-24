@@ -3,7 +3,6 @@ import { currentUser, isAuthenticated } from "$lib/authStore";
 import type { Auth } from "$lib/type";
 import { USERS_API_URL } from "$lib/url";
 import { toast } from "svelte-sonner";
-// import { get } from "svelte/store";
 
 
 export async function signup(credentials: Auth): Promise<boolean> {
@@ -30,7 +29,7 @@ export async function signup(credentials: Auth): Promise<boolean> {
 // Sign In
 export async function signin(credentials: Auth): Promise<{ username: string } | null> {
     try {
-        const response = await fetch(`${USERS_API_URL}?username=${credentials.username}&password=${credentials.password}`);
+        const response = await fetch(USERS_API_URL);
         if (!response.ok) {
             return null;
         }
@@ -48,12 +47,9 @@ export async function signin(credentials: Auth): Promise<{ username: string } | 
             return null;
         }
 
-        // Update the store with the signed-in user
         currentUser.set(matchingUser.username);
         isAuthenticated.set(true);
 
-        // Log the current store value instead of storedUser
-        // console.log(typeof get(currentUser), get(currentUser));
         return { username: matchingUser.username };
     } catch (error) {
         console.error("Signin error:", error);
@@ -69,4 +65,24 @@ export function signout(): void {
     // Log the current store value instead of storedUser
     // console.log(typeof get(currentUser), get(currentUser));
     goto("/");
+}
+
+export async function deleteUser(credentials: { username: string }): Promise<{ username: string } | null> {
+    const usersResponse = await fetch(USERS_API_URL, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    if (!usersResponse.ok) return null;
+
+    const users = await usersResponse.json();
+    const user = users.find((u: Auth) => u.username === credentials.username);
+
+    if (!user) return null;
+
+    const deleteResponse = await fetch(`${USERS_API_URL}/${user._id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+    });
+
+    return deleteResponse.ok ? { username: credentials.username } : null;
 }

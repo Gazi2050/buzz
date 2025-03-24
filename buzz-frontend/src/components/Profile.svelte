@@ -2,9 +2,57 @@
     import { User, Eye, EyeOff } from "lucide-svelte";
     import Button from "./Button.svelte";
     import { inputObj } from "$lib/Class";
+    import { deleteUser, signout } from "@utils/auth";
+    import Swal from "sweetalert2";
+    import { toast } from "svelte-sonner";
+    import { goto } from "$app/navigation";
 
     let { username = "", password = "", profileColor = "" } = $props();
     let isShow = $state(false);
+
+    async function handleDelete() {
+        try {
+            // Prompt the user with a confirmation message
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action cannot be undone!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#27272a",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+                theme: "dark",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    // Perform the deletion action
+                    const result = await deleteUser({ username });
+                    signout();
+                    goto("/");
+                    // Handle the outcome of the delete operation
+                    if (result) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your account has been successfully deleted.",
+                            icon: "success",
+                            confirmButtonColor: "#27272a",
+                            theme: "dark",
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Failed to delete account. Please try again later.",
+                            icon: "error",
+                            confirmButtonColor: "#27272a",
+                            theme: "dark",
+                        });
+                    }
+                }
+            });
+        } catch (error) {
+            console.error("Error deleting account:", error);
+            toast.error("An error occurred while processing the deletion");
+        }
+    }
 </script>
 
 <div class="flex justify-center items-center h-screen mx-2">
@@ -46,8 +94,12 @@
             </div>
         </div>
         <div class="flex justify-center items-center gap-5 mt-10">
-            <Button type="button" text="Edit" />
-            <Button type="button" text="Delete Account" color="#ff0303" />
+            <Button
+                type="button"
+                text="Delete Account"
+                color="#ff0303"
+                onclick={handleDelete}
+            />
         </div>
     </div>
 </div>
