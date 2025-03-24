@@ -6,9 +6,9 @@ import 'dotenv/config'
 
 const app = new Hono()
 
-// Enable CORS
-app.use('*', cors({
-  origin: '*',
+//CORS
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://buzz-backend-01.vercel.app'],
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowHeaders: ['Content-Type', 'Authorization']
 }))
@@ -44,6 +44,7 @@ const userCollection = db.collection('users')
 
 // Middleware to set the userCollection in context
 app.use('*', async (c, next) => {
+  //@ts-ignore
   c.set('userCollection', userCollection);
   await next();
 });
@@ -82,6 +83,7 @@ app.post('/users', async (c) => {
 //DELETE
 app.delete('/users/:id', async (c) => {
   try {
+    //@ts-ignore
     const userCollection = c.get('userCollection') as any;
     const id = c.req.param('id');
 
