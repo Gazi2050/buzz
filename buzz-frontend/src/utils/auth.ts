@@ -1,16 +1,12 @@
-// src/utils/auth.ts
 import { goto } from "$app/navigation";
-import { env } from "$env/dynamic/public";
 import { currentUser, isAuthenticated } from "$lib/authStore";
 import type { Auth } from "$lib/type";
+import { USERS_API_URL } from "$lib/url";
 import { toast } from "svelte-sonner";
 
-const API_URL = env.PUBLIC_USER_API;
-
-// Sign Up
 export async function signup(credentials: Auth): Promise<boolean> {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(USERS_API_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -32,7 +28,7 @@ export async function signup(credentials: Auth): Promise<boolean> {
 // Sign In
 export async function signin(credentials: Auth): Promise<{ username: string } | null> {
     try {
-        const response = await fetch(`${API_URL}?username=${credentials.username}&password=${credentials.password}`);
+        const response = await fetch(`${USERS_API_URL}?username=${credentials.username}&password=${credentials.password}`);
         if (!response.ok) {
             return null;
         }

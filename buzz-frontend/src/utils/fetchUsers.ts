@@ -1,9 +1,9 @@
 import { storedUser } from "$lib/authStore";
 import type { Auth } from "$lib/type";
-
+import { USERS_API_URL } from "$lib/url";
 export async function fetchUsers() {
     try {
-        const response = await fetch("http://localhost:3000/users");
+        const response = await fetch(USERS_API_URL);
         if (!response.ok) {
             console.error("Fetch failed:", response.status, response.statusText);
             throw new Error("Network response was not ok");

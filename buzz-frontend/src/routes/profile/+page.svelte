@@ -2,26 +2,35 @@
     import Error from "@components/Error.svelte";
     import Loading from "@components/Loading.svelte";
     import Profile from "@components/Profile.svelte";
-    import { createQuery } from "@tanstack/svelte-query";
+    import { createQuery, useQueryClient } from "@tanstack/svelte-query";
     import { fetchUsers } from "@utils/fetchUsers";
-    let username = "";
-    let password = "";
-    let profileColor = "";
+    import { onMount } from "svelte";
+
+    const queryClient = useQueryClient();
+
     const query = createQuery({
         queryKey: ["users"],
         queryFn: () => fetchUsers(),
+        refetchInterval: 100,
     });
-    $: if ($query.isSuccess && $query.data) {
-        username = $query?.data?.username;
-        password = $query?.data?.password;
-        profileColor = $query?.data?.profileColor;
+
+    $: userData = $query.isSuccess ? $query.data : null;
+    $: username = userData?.username ?? "";
+    $: password = userData?.password ?? "";
+    $: profileColor = userData?.profileColor ?? "";
+
+    function refetchData() {
+        queryClient.refetchQueries({ queryKey: ["users"] });
     }
+    onMount(() => {
+        refetchData();
+    });
 </script>
 
 {#if $query.isLoading}
     <Loading />
 {:else if $query.isError}
     <Error />
-{:else if $query.isSuccess}
+{:else if $query.isSuccess && userData}
     <Profile {username} {password} {profileColor} />
 {/if}
