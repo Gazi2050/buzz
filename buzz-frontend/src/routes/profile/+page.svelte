@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { storedUser } from "$lib/authStore";
     import Error from "@components/Error.svelte";
     import Loading from "@components/Loading.svelte";
     import Profile from "@components/Profile.svelte";
@@ -9,9 +10,11 @@
     const queryClient = useQueryClient();
 
     const query = createQuery({
-        queryKey: ["users"],
+        queryKey: ["users", storedUser],
         queryFn: () => fetchUsers(),
-        refetchInterval: 100,
+        refetchInterval: 1000,
+        refetchIntervalInBackground: true,
+        enabled: !!storedUser,
     });
 
     $: userData = $query.isSuccess ? $query.data : null;

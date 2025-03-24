@@ -7,18 +7,27 @@
 	import { page } from "$app/stores";
 	import { QueryClientProvider } from "@tanstack/svelte-query";
 	import { QueryClient } from "@tanstack/svelte-query";
+	import { browser } from "$app/environment";
 	let { children } = $props();
-	const queryClient = new QueryClient();
+	const queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {
+				enabled: browser,
+			},
+		},
+	});
+
+	const excludedPaths = ["/sign-up", "/sign-in"];
 </script>
 
 <QueryClientProvider client={queryClient}>
 	<!-- <Frontpage>.....</Frontpage> -->
 	<div class="bg-zinc-950">
-		{#if $page.url.pathname === "/"}
+		{#if !excludedPaths.includes($page.url.pathname)}
 			<Header />
 		{/if}
 		{@render children()}
-		{#if $page.url.pathname === "/"}
+		{#if !excludedPaths.includes($page.url.pathname)}
 			<Navbar />
 		{/if}
 		<Toaster position="top-center" richColors />
