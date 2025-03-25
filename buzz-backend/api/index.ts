@@ -6,10 +6,14 @@ import 'dotenv/config'
 import { handle } from 'hono/vercel'
 
 const app = new Hono().basePath('/api')
+const PORT = Number(process.env.PORT) || 3000;
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
+  : [];
 
 // CORS
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://buzz-01.vercel.app'],
+  origin: allowedOrigins,
   allowMethods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization']
 }))
@@ -43,9 +47,9 @@ async function run() {
 
     serve({
       fetch: app.fetch,
-      port: 3000
+      port: PORT
     })
-    console.log(`🚀 Server is running on http://localhost:3000`)
+    console.log(`🚀 Server is running on http://localhost:${PORT}`)
 
   } catch (err) {
     console.error("❌ MongoDB Connection Error:", err)
