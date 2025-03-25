@@ -1,6 +1,16 @@
-<script>
+<script lang="ts">
     import { inputObj } from "$lib/Class";
     import Button from "./Button.svelte";
+    let {
+        title = $bindable(""),
+        description = $bindable(""),
+        onSubmit = () => {},
+    } = $props();
+    function handleSubmit(event: Event) {
+        event.preventDefault();
+        onSubmit({ title, description });
+        console.log({ title, description });
+    }
 </script>
 
 <div class="flex items-center justify-center min-h-screen">
@@ -19,7 +29,7 @@
             </h1>
         </div>
 
-        <form class="space-y-4">
+        <form class="space-y-4" onsubmit={handleSubmit}>
             <!-- Post Title -->
             <div class="space-y-2">
                 <label
@@ -33,6 +43,7 @@
                         <input
                             type="text"
                             class={inputObj?.innerClass}
+                            bind:value={title}
                             placeholder="Enter your post title"
                             id="username"
                             autocomplete="off"
@@ -54,6 +65,7 @@
                         <textarea
                             class="outline-none placeholder:text-gray-400 text-white w-full h-[200px]"
                             placeholder="Enter your post description"
+                            bind:value={description}
                             id="description"
                             autocomplete="off"
                             required

@@ -38,6 +38,7 @@ const client = new MongoClient(uri, {
 });
 const db = client.db('buzz')
 const userCollection = db.collection('users')
+const postCollection = db.collection('posts')
 
 async function run() {
   try {
@@ -105,6 +106,30 @@ app.delete('/users/:id', async (c) => {
   } catch (error) {
     console.error('Error deleting user:', error)
     return c.json({ error: 'Failed to delete user' }, 500)
+  }
+})
+
+/* posts API */
+// GET
+app.get('/posts', async (c) => {
+  try {
+    const posts = await postCollection.find().toArray()
+    return c.json(posts)
+  } catch (error) {
+    console.error('Error fetching posts:', error)
+    return c.json({ error: 'Failed to fetch posts' }, 500)
+  }
+})
+
+// POST
+app.post('/posts', async (c) => {
+  try {
+    const post = await c.req.json()
+    const result = await userCollection.insertOne(post)
+    return c.json(result, 201)
+  } catch (error) {
+    console.error('Error inserting post:', error)
+    return c.json({ error: 'Failed to insert post' }, 500)
   }
 })
 
