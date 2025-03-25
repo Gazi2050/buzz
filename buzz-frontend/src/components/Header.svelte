@@ -21,7 +21,9 @@
                 <User class="w-7 h-7 md:w-9 md:h-9 text-black" />
             </a>
         {:else}
-            <a href="/sign-in"><Button text="Sign In" type="button" /></a>
+            <a href="/sign-in"
+                ><Button text="Sign In" type="button" textSize="20px" /></a
+            >
         {/if}
     </div>
 </div>

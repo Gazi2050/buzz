@@ -20,7 +20,7 @@
             <Layers />
         </a>
         <a
-            href="/"
+            href="/create-post"
             class="transition-transform transform hover:scale-125 duration-300"
         >
             <Plus size={35} class="bg-white text-black rounded-full" />

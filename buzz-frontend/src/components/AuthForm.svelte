@@ -175,7 +175,11 @@
             {/if}
 
             <div class="flex justify-center items-center mt-10">
-                <Button text={isSignUp ? "Sign Up" : "Sign In"} type="submit" />
+                <Button
+                    text={isSignUp ? "Sign Up" : "Sign In"}
+                    type="submit"
+                    textSize="20px"
+                />
             </div>
         </form>
 
