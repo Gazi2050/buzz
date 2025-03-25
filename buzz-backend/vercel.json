@@ -1,23 +1,15 @@
 {
-    "version": 2,
-    "builds": [
+    "rewrites": [
         {
-            "src": "index.ts",
-            "use": "@vercel/node"
+            "source": "/api/(.*)",
+            "destination": "/api"
         }
     ],
-    "routes": [
+    "redirects": [
         {
-            "src": "/(.*)",
-            "dest": "index.js",
-            "methods": [
-                "GET",
-                "POST",
-                "PUT",
-                "PATCH",
-                "DELETE",
-                "OPTIONS"
-            ]
+            "source": "/",
+            "destination": "/api",
+            "permanent": false
         }
     ]
 }

@@ -3,13 +3,14 @@ import { Hono } from 'hono'
 import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb'
 import { cors } from 'hono/cors'
 import 'dotenv/config'
+import { handle } from 'hono/vercel'
 
-const app = new Hono()
+const app = new Hono().basePath('/api')
 
-//CORS
+// CORS
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://buzz-backend-01.vercel.app'],
-  allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: ['http://localhost:5173', 'https://buzz-01.vercel.app'],
+  allowMethods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization']
 }))
 
@@ -17,19 +18,11 @@ app.get('/', (c) => {
   return c.text('hello buzz')
 })
 
-serve({
-  fetch: app.fetch,
-  port: 3000
-})
-
-console.log(`Server is running on http://localhost:3000`)
-
 // MongoDB connection
 const uri = process.env.DB_URL
-
 if (!uri) {
-  console.error("Missing DB_URL in environment variables!")
-  process.exit(1) // Exit the process to prevent further errors
+  console.error("❌ Missing DB_URL in environment variables!")
+  process.exit(1)
 }
 
 const client = new MongoClient(uri, {
@@ -42,15 +35,28 @@ const client = new MongoClient(uri, {
 const db = client.db('buzz')
 const userCollection = db.collection('users')
 
-// Middleware to set the userCollection in context
-app.use('*', async (c, next) => {
-  //@ts-ignore
-  c.set('userCollection', userCollection);
-  await next();
-});
+async function run() {
+  try {
+    await client.connect()
+    await client.db('admin').command({ ping: 1 })
+    console.log('✅ MongoDB Connected Successfully')
 
-/*users api*/
-//GET
+    serve({
+      fetch: app.fetch,
+      port: 3000
+    })
+    console.log(`🚀 Server is running on http://localhost:3000`)
+
+  } catch (err) {
+    console.error("❌ MongoDB Connection Error:", err)
+    process.exit(1) // Stop server on failure
+  }
+}
+
+run()
+
+/* users API */
+// GET
 app.get('/users', async (c) => {
   try {
     const users = await userCollection.find().toArray()
@@ -61,7 +67,7 @@ app.get('/users', async (c) => {
   }
 })
 
-//POST
+// POST
 app.post('/users', async (c) => {
   try {
     const user = await c.req.json()
@@ -80,34 +86,28 @@ app.post('/users', async (c) => {
   }
 })
 
-//DELETE
+// DELETE
 app.delete('/users/:id', async (c) => {
   try {
-    //@ts-ignore
-    const userCollection = c.get('userCollection') as any;
-    const id = c.req.param('id');
+    const id = c.req.param('id')
 
-    if (!ObjectId.isValid(id)) return c.json({ error: 'Invalid user ID' }, 400);
+    if (!ObjectId.isValid(id)) return c.json({ error: 'Invalid user ID' }, 400)
 
-    const result = await userCollection.deleteOne({ _id: new ObjectId(id) });
+    const result = await userCollection.deleteOne({ _id: new ObjectId(id) })
 
     return result.deletedCount
       ? c.json({ message: 'User deleted successfully' })
-      : c.json({ error: 'User not found' }, 404);
+      : c.json({ error: 'User not found' }, 404)
   } catch (error) {
     console.error('Error deleting user:', error)
     return c.json({ error: 'Failed to delete user' }, 500)
   }
 })
 
-async function run() {
-  try {
-    await client.connect()
-    await client.db('admin').command({ ping: 1 })
-    console.log('✅ MongoDB Connected Successfully')
-  } catch (err) {
-    console.error("❌ MongoDB Connection Error:", err)
-  }
-}
-
-run().catch(console.dir)
+// for Vercel
+export const GET = handle(app);
+export const POST = handle(app);
+export const PATCH = handle(app);
+export const PUT = handle(app);
+export const DELETE = handle(app);
+export const OPTIONS = handle(app);
