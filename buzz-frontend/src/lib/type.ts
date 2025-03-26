@@ -5,9 +5,11 @@ export interface Auth {
     profileColor?: string;
 };
 export interface Post {
+    username: string;
+    profileColor: string;
     title: string;
     description: string;
-    time?: Date;
-    vote?: { upvote: number; downvote: number };
-    comments?: { username: string; text: string; time?: Date }[];
+    time: string;
+    vote: { upvote: number; downvote: number };
+    comments?: { username?: string; text?: string; time?: string }[];
 }

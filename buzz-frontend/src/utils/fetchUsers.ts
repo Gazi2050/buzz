@@ -8,7 +8,6 @@ export async function fetchUsers() {
             console.error("Fetch failed:", response.status, response.statusText);
             throw new Error("Network response was not ok");
         }
-
         const users = await response.json();
         // console.log("Fetched users:", users);
         // console.log("Stored User:", storedUser);

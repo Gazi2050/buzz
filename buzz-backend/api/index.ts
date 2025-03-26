@@ -125,7 +125,7 @@ app.get('/posts', async (c) => {
 app.post('/posts', async (c) => {
   try {
     const post = await c.req.json()
-    const result = await userCollection.insertOne(post)
+    const result = await postCollection.insertOne(post)
     return c.json(result, 201)
   } catch (error) {
     console.error('Error inserting post:', error)

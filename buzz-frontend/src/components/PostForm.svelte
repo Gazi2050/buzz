@@ -1,15 +1,64 @@
 <script lang="ts">
     import { inputObj } from "$lib/Class";
+    import type { Post } from "$lib/type";
+    import moment from "moment";
     import Button from "./Button.svelte";
+    import { createQuery, useQueryClient } from "@tanstack/svelte-query";
+    import { currentUser } from "$lib/authStore";
+    import { fetchUsers } from "@utils/fetchUsers";
+
     let {
         title = $bindable(""),
         description = $bindable(""),
-        onSubmit = () => {},
+        onSubmit = (post: Post) => {},
     } = $props();
-    function handleSubmit(event: Event) {
+
+    const queryClient = useQueryClient();
+
+    const query = createQuery({
+        queryKey: ["users", $currentUser],
+        queryFn: () => fetchUsers(),
+        refetchInterval: 500,
+        refetchIntervalInBackground: true,
+        enabled: !!$currentUser,
+        staleTime: 5000,
+    });
+
+    let formElement: HTMLFormElement;
+
+    async function handleSubmit(event: Event) {
         event.preventDefault();
-        onSubmit({ title, description });
-        console.log({ title, description });
+
+        let userData;
+        if ($query.isLoading || !$query.isSuccess) {
+            try {
+                userData = await queryClient.fetchQuery({
+                    queryKey: ["users", $currentUser],
+                    queryFn: () => fetchUsers(),
+                });
+            } catch (error) {
+                console.error("Failed to fetch user data:", error);
+                return;
+            }
+        } else {
+            userData = $query.data;
+        }
+
+        const username = userData?.username ?? "Anonymous";
+        const profileColor = userData?.profileColor ?? "#6AFF33";
+
+        const post: Post = {
+            username,
+            profileColor,
+            title,
+            description,
+            time: moment().utc().toISOString(),
+            vote: { upvote: 0, downvote: 0 },
+            comments: [],
+        };
+
+        onSubmit(post);
+        formElement.reset();
     }
 </script>
 
@@ -22,18 +71,18 @@
             <h1 class="text-3xl font-semibold text-white mb-3">
                 Create your
                 <span
-                    class="bg-zinc-800 text-[#6AFF33] px-[5px] pb-[3px] pt-0 rounded-lg"
+                    class="bg-zinc-800 text-[#6AFF33] px-1.5 pb-1 pt-0 rounded-lg"
                 >
                     Post
                 </span>
             </h1>
         </div>
 
-        <form class="space-y-4" onsubmit={handleSubmit}>
+        <form class="space-y-6" bind:this={formElement} onsubmit={handleSubmit}>
             <!-- Post Title -->
             <div class="space-y-2">
                 <label
-                    for="Title"
+                    for="title"
                     class="block text-sm md:text-base font-medium text-gray-500"
                 >
                     Title
@@ -45,17 +94,18 @@
                             class={inputObj?.innerClass}
                             bind:value={title}
                             placeholder="Enter your post title"
-                            id="username"
+                            id="title"
                             autocomplete="off"
                             required
                         />
                     </div>
                 </div>
             </div>
+
             <!-- Post Description -->
             <div class="space-y-2">
                 <label
-                    for="Description"
+                    for="description"
                     class="block text-sm md:text-base font-medium text-gray-500"
                 >
                     Description
@@ -63,7 +113,7 @@
                 <div class="flex items-center gap-2">
                     <div class={inputObj?.outerClass}>
                         <textarea
-                            class="outline-none placeholder:text-gray-400 text-white w-full h-[200px]"
+                            class="outline-none placeholder:text-gray-400 text-white w-full h-[200px] resize-none"
                             placeholder="Enter your post description"
                             bind:value={description}
                             id="description"
@@ -73,8 +123,23 @@
                     </div>
                 </div>
             </div>
-            <div class="flex justify-center items-center mt-10">
-                <Button text="Post" type="submit" textSize="23px" />
+
+            <!-- Submit Button with States -->
+            <div class="flex flex-col items-center gap-2 mt-10">
+                {#if $query.isLoading}
+                    <Button
+                        text="Posting..."
+                        type="button"
+                        textSize="23px"
+                        disabled
+                    />
+                {:else if $query.isError}
+                    <p class="text-red-500 text-sm font-medium">
+                        Failed to load user data. Please try refreshing.
+                    </p>
+                {:else if $query.isSuccess}
+                    <Button text="Post" type="submit" textSize="23px" />
+                {/if}
             </div>
         </form>
     </div>
