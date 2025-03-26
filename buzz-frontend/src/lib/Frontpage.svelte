@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import FrontLoading from "@components/FrontLoading.svelte";
 
     let { children } = $props();
