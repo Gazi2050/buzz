@@ -22,7 +22,7 @@
 
 <QueryClientProvider client={queryClient}>
 	<!-- <Frontpage>.....</Frontpage> -->
-	<div class="bg-zinc-950">
+	<div>
 		{#if !excludedPaths.includes($page.url.pathname)}
 			<Header />
 		{/if}

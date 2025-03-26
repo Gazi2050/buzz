@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { truncateText } from "@utils/truncateText";
     import {
         ArrowBigDown,
         ArrowBigUp,
@@ -15,6 +16,8 @@
         downvote = 0,
         comments = 0,
     } = $props();
+    let minimumChar = 120;
+    let displayText = $derived(truncateText(description, minimumChar));
 </script>
 
 <div
@@ -43,7 +46,17 @@
 
     <!-- Description -->
     <p class="text-sm md:text-base text-gray-400 mb-4 leading-relaxed">
-        {description}
+        {#if description.length > minimumChar}
+            {displayText}
+            <a
+                href="/"
+                class="text-[#6AFF33] hover:text-green-500 ml-2 duration-300"
+            >
+                See More
+            </a>
+        {:else}
+            {description}
+        {/if}
     </p>
 
     <!-- Actions -->

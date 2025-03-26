@@ -11,7 +11,7 @@
     });
 </script>
 
-<div class="flex flex-col py-3 gap-3 pt-[100px] mx-1 h-screen">
+<div class="flex flex-col py-3 gap-3 pt-[100px] mx-1 h-full">
     {#if $query.isLoading}
         <Loading />
     {:else if $query.isError}
