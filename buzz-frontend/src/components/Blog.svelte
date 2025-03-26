@@ -48,7 +48,7 @@
 
     <!-- Actions -->
     <div
-        class="flex justify-between sm:justify-evenly border-t border-gray-700 pt-3 gap-4 sm:gap-10"
+        class="flex justify-around border-t border-gray-700 pt-3 gap-4 sm:gap-10"
     >
         <button
             class="flex items-center gap-2 sm:gap-3 text-gray-400 hover:text-white transition"

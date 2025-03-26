@@ -124,22 +124,9 @@
                 </div>
             </div>
 
-            <!-- Submit Button with States -->
+            <!-- Submit Button -->
             <div class="flex flex-col items-center gap-2 mt-10">
-                {#if $query.isLoading}
-                    <Button
-                        text="Posting..."
-                        type="button"
-                        textSize="23px"
-                        disabled
-                    />
-                {:else if $query.isError}
-                    <p class="text-red-500 text-sm font-medium">
-                        Failed to load user data. Please try refreshing.
-                    </p>
-                {:else if $query.isSuccess}
-                    <Button text="Post" type="submit" textSize="23px" />
-                {/if}
+                <Button text="Post" type="submit" textSize="23px" />
             </div>
         </form>
     </div>
