@@ -16,7 +16,7 @@
     const queryClient = useQueryClient();
 
     const query = createQuery({
-        queryKey: ["users", $currentUser],
+        queryKey: ["postUser", $currentUser],
         queryFn: () => fetchUsers(),
         refetchInterval: 500,
         refetchIntervalInBackground: true,
