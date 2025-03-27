@@ -12,6 +12,7 @@
         time = "Mar 20, 2025",
         title = "This is the Title",
         description = "Hello,this is test post",
+        blogId = "1",
         upvote = 0,
         downvote = 0,
         comments = 0,
@@ -49,7 +50,7 @@
         {#if description.length > minimumChar}
             {displayText}
             <a
-                href="/"
+                href="/{blogId}"
                 class="text-[#6AFF33] hover:text-green-500 ml-2 duration-300"
             >
                 See More

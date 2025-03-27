@@ -24,6 +24,7 @@
                 time={moment(post?.time).local().fromNow()}
                 title={post?.title}
                 description={post?.description}
+                blogId={post?._id}
                 upvote={post?.upvote}
                 downvote={post?.downvote}
                 comments={post?.comments?.lenght}

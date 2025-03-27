@@ -121,6 +121,26 @@ app.get('/posts', async (c) => {
   }
 })
 
+//GET id:
+app.get('/posts/:id', async (c) => {
+  try {
+    const id = c.req.param('id');
+    if (!ObjectId.isValid(id)) {
+      return c.json({ error: 'Invalid ID format' }, 400);
+    }
+    const query = { _id: new ObjectId(id) };
+    const result = await postCollection.findOne(query);
+    if (!result) {
+      return c.json({ error: 'Post not found' }, 404);
+    }
+    return c.json(result);
+  } catch (error) {
+    console.error('Error fetching post:', error);
+    return c.json({ error: 'Failed to fetch post' }, 500);
+  }
+});
+
+
 // POST
 app.post('/posts', async (c) => {
   try {

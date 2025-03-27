@@ -1,10 +1,11 @@
 export interface Auth {
-    id?: string
+    _id?: string
     username: string;
     password: string;
     profileColor?: string;
 };
 export interface Post {
+    _id?: string;
     username: string;
     profileColor: string;
     title: string;
