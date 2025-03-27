@@ -4,7 +4,7 @@
 </script>
 
 <div
-    class="fixed bottom-10 sm:bottom-16 md:bottom-20 left-1/2 transform -translate-x-1/2 w-full max-w-[350px] md:max-w-[500px] p-4 bg-transparent backdrop-blur-xs rounded-xl shadow-lg text-white"
+    class="fixed bottom-10 sm:bottom-16 md:bottom-20 left-1/2 transform -translate-x-1/2 w-full max-w-[350px] md:max-w-[500px] p-4 bg-transparent backdrop-blur-lg rounded-xl shadow-lg text-white z-50"
 >
     <div class="flex justify-evenly items-center gap-3 sm:gap-5">
         <a

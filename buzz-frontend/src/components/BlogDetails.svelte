@@ -5,6 +5,17 @@
         MessageSquareMore,
         User,
     } from "lucide-svelte";
+    let {
+        id = "1",
+        username = "Anonymous",
+        profileColor = "#6AFF33",
+        time = "a hour ago",
+        title = "This is the Title",
+        description = "Hello, this is a test post",
+        upvote = 0,
+        downvote = 0,
+        comments = 0,
+    } = $props();
 </script>
 
 <div class="max-w-[1220px] w-full mx-auto px-4 py-8">
@@ -14,21 +25,22 @@
         <!-- Header: Profile + Username -->
         <header class="flex items-center gap-4 mb-6">
             <div
-                class="w-16 h-16 rounded-full flex justify-center items-center bg-green-600/90 shadow-lg"
+                class="w-16 h-16 rounded-full flex justify-center items-center shadow-lg"
+                style="background-color: {profileColor};"
             >
                 <User size={40} class="text-black" />
             </div>
             <div>
-                <h2 class="text-2xl font-semibold text-white">username</h2>
-                <p class="text-sm text-gray-500">Published on: time</p>
+                <h2 class="text-2xl font-semibold text-white">{username}</h2>
+                <p class="text-sm text-gray-500 mt-0.5">{time}</p>
             </div>
         </header>
 
         <!-- Blog Content -->
         <section>
-            <h1 class="text-4xl font-extrabold text-white mb-4">title</h1>
+            <h1 class="text-4xl font-bold text-white mb-4">{title}</h1>
             <p class="text-xl text-gray-400 leading-relaxed mb-6">
-                description
+                {description}
             </p>
         </section>
 
@@ -41,13 +53,13 @@
                     class="flex items-center gap-2 text-gray-400 hover:text-green-400 transition ease-in-out duration-200"
                 >
                     <ArrowBigUp strokeWidth={1.5} size={32} />
-                    <span class="text-lg font-semibold">10</span>
+                    <span class="text-lg font-semibold">{upvote}</span>
                 </button>
                 <button
                     class="flex items-center gap-2 text-gray-400 hover:text-red-400 transition ease-in-out duration-200"
                 >
                     <ArrowBigDown strokeWidth={1.5} size={32} />
-                    <span class="text-lg font-semibold">5</span>
+                    <span class="text-lg font-semibold">{downvote}</span>
                 </button>
             </div>
             <button
@@ -58,7 +70,7 @@
                     size={32}
                     class="mt-[3px]"
                 />
-                <span class="text-lg font-semibold">7 Comments</span>
+                <span class="text-lg font-semibold">{comments}</span>
             </button>
         </footer>
     </article>

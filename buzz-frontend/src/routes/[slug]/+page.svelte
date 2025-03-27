@@ -13,14 +13,14 @@
 </script>
 
 <div class="flex flex-col py-3 gap-3 pt-[100px] mx-1 h-full">
-    <!-- {#if $query.isLoading}
+    {#if $query.isLoading}
         <Loading />
     {:else if $query.isError}
         <Error />
     {:else if $query.isSuccess}
         <p class="text-3xl text-white font-bold text-center mt-20">
             {$query.data?._id}
+            <BlogDetails />
         </p>
-    {/if} -->
-    <BlogDetails />
+    {/if}
 </div>

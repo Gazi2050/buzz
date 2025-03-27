@@ -5,7 +5,7 @@
 </script>
 
 <div
-    class="bg-transparent backdrop-blur-lg fixed top-0 right-0 left-0 py-4 flex justify-center"
+    class="bg-transparent backdrop-blur-lg fixed top-0 right-0 left-0 py-4 flex justify-center z-50"
 >
     <div
         class="max-w-[1450px] w-full flex justify-between items-center px-6 md:px-16 lg:px-32"
