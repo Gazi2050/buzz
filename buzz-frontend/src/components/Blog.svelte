@@ -37,7 +37,7 @@
         </div>
         <div>
             <h2 class="text-lg font-semibold text-white">{username}</h2>
-            <p class="text-xs text-gray-400">{time}</p>
+            <p class="text-xs text-gray-400 font-medium">{time}</p>
         </div>
     </div>
 

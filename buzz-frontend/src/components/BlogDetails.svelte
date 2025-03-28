@@ -32,14 +32,16 @@
             </div>
             <div>
                 <h2 class="text-2xl font-semibold text-white">{username}</h2>
-                <p class="text-sm text-gray-500 mt-0.5">{time}</p>
+                <p class="text-sm text-gray-500 mt-1 font-medium">{time}</p>
             </div>
         </header>
 
         <!-- Blog Content -->
         <section>
             <h1 class="text-4xl font-bold text-white mb-4">{title}</h1>
-            <p class="text-xl text-gray-400 leading-relaxed mb-6">
+            <p
+                class="max-h-[450px] lg:max-h-[420px] overflow-y-auto text-xl text-gray-400 leading-relaxed"
+            >
                 {description}
             </p>
         </section>
