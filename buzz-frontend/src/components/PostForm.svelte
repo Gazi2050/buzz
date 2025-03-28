@@ -53,7 +53,7 @@
             title,
             description,
             time: moment().utc().toISOString(),
-            vote: { upvote: 0, downvote: 0 },
+            vote: { upvote: 0, downvote: 0, voter: [] },
             comments: [],
         };
 

@@ -11,6 +11,10 @@ export interface Post {
     title: string;
     description: string;
     time: string;
-    vote: { upvote: number; downvote: number };
+    vote: {
+        upvote: number;
+        downvote: number;
+        voter?: { username?: string, type?: string }[];
+    };
     comments?: { username?: string; text?: string; time?: string }[];
 }

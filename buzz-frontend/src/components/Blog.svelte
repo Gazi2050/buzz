@@ -71,6 +71,7 @@
                 <ArrowBigUp strokeWidth={1.5} class="w-6 h-6" />
                 <span class="text-lg font-semibold">{upvote}</span>
             </button>
+            <div class="p-[0.5px] bg-gray-700"></div>
             <button
                 class="flex items-center gap-2 text-gray-400 hover:text-red-400 transition duration-200 ease-in-out"
             >
