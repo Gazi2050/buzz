@@ -9,6 +9,7 @@
 	import { browser } from "$app/environment";
 	import { excludedPaths } from "$lib/data";
 	import { isAuthenticated } from "$lib/authStore";
+	import { isExcludedPath } from "@utils/isExcludedPath";
 
 	let { children } = $props();
 	const queryClient = new QueryClient({
@@ -27,7 +28,7 @@
 			<Header />
 		{/if}
 		{@render children()}
-		{#if !excludedPaths.includes($page.url.pathname) && $isAuthenticated === true}
+		{#if !isExcludedPath($page.url.pathname) && $isAuthenticated === true}
 			<Navbar />
 		{/if}
 		<Toaster position="top-center" richColors />
