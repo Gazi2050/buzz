@@ -19,6 +19,7 @@
     {:else if $query.isSuccess}
         {#each $query.data as post}
             <Blog
+                header={true}
                 profileColor={post?.profileColor}
                 username={post?.username}
                 time={moment(post?.time).local().fromNow()}

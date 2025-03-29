@@ -18,6 +18,7 @@
         upvote = 0,
         downvote = 0,
         comments = 0,
+        header = false,
     } = $props();
 
     let minimumChar = 120;
@@ -28,19 +29,22 @@
     class="max-w-[1220px] w-full bg-gradient-to-b from-zinc-900 to-black p-6 rounded-3xl shadow-sm border border-gray-800 hover:shadow-green-600 drop-shadow-xl transition duration-300 mx-auto overflow-hidden"
 >
     <!-- Header: Profile + Username -->
-    <div class="flex items-center gap-4 mb-5">
-        <div
-            class="w-14 h-14 rounded-full flex justify-center items-center shadow-md"
-            style="background-color: {profileColor};"
-        >
-            <User color={"black"} size={30} />
+    {#if header === true}
+        <div class="flex items-center gap-4 mb-5">
+            <div
+                class="w-14 h-14 rounded-full flex justify-center items-center shadow-md"
+                style="background-color: {profileColor};"
+            >
+                <User color={"black"} size={30} />
+            </div>
+            <div>
+                <h2 class="text-lg font-semibold text-white">{username}</h2>
+                <p class="text-xs text-gray-400 font-medium">{time}</p>
+            </div>
         </div>
-        <div>
-            <h2 class="text-lg font-semibold text-white">{username}</h2>
-            <p class="text-xs text-gray-400 font-medium">{time}</p>
-        </div>
-    </div>
-
+    {:else}
+        <p class="text-sm text-gray-400 font-medium">{time}</p>
+    {/if}
     <!-- Title -->
     <h3 class="text-2xl font-extrabold text-white mb-3">{title}</h3>
 
