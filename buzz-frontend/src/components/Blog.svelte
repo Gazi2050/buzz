@@ -19,6 +19,7 @@
         downvote = 0,
         comments = 0,
         header = false,
+        publicLink = false,
     } = $props();
 
     let minimumChar = 120;
@@ -53,7 +54,7 @@
         {#if description.length > minimumChar}
             {displayText}
             <a
-                href="/{blogId}"
+                href={publicLink ? `/${blogId}` : `/my-post/${blogId}`}
                 class="text-green-400 hover:text-green-300 ml-1 font-semibold transition duration-300 inline-flex gap-1 items-center"
             >
                 <span>Read More</span>
