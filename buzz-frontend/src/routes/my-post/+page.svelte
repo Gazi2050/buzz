@@ -12,12 +12,12 @@
     });
 </script>
 
-<div class="flex flex-col py-3 gap-3 pt-[100px] mx-1 h-full">
-    {#if $query.isLoading}
-        <Loading />
-    {:else if $query.isError}
-        <Error />
-    {:else if $query.isSuccess}
+{#if $query.isLoading}
+    <Loading />
+{:else if $query.isError}
+    <Error />
+{:else if $query.isSuccess}
+    <div class="flex flex-col py-3 gap-3 pt-[100px] mx-1 h-full">
         {#each $query.data as myPost}
             <Blog
                 profileColor={myPost?.profileColor}
@@ -28,8 +28,8 @@
                 blogId={myPost?._id}
                 upvote={myPost?.upvote}
                 downvote={myPost?.downvote}
-                comments={myPost?.comments?.lenght}
+                comments={myPost?.comments?.length}
             />
         {/each}
-    {/if}
-</div>
+    </div>
+{/if}

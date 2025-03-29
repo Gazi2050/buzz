@@ -11,12 +11,12 @@
     });
 </script>
 
-<div class="flex flex-col py-3 gap-3 pt-[100px] mx-1 h-full">
-    {#if $query.isLoading}
-        <Loading />
-    {:else if $query.isError}
-        <Error />
-    {:else if $query.isSuccess}
+{#if $query.isLoading}
+    <Loading />
+{:else if $query.isError}
+    <Error />
+{:else if $query.isSuccess}
+    <div class="flex flex-col py-3 gap-3 pt-[100px] mx-1 h-full">
         {#each $query.data as post}
             <Blog
                 header={true}
@@ -28,8 +28,8 @@
                 blogId={post?._id}
                 upvote={post?.upvote}
                 downvote={post?.downvote}
-                comments={post?.comments?.lenght}
+                comments={post?.comments?.length}
             />
         {/each}
-    {/if}
-</div>
+    </div>
+{/if}
