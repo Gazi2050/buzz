@@ -140,17 +140,20 @@ app.get('/posts', async (c) => {
 //   }
 // });
 
+//GET :identifier
 app.get('/posts/:identifier', async (c) => {
   try {
     const identifier = c.req.param('identifier');
     let query;
+    let result;
     if (ObjectId.isValid(identifier)) {
       query = { _id: new ObjectId(identifier) };
+      result = await postCollection.findOne(query);
     } else {
       query = { username: identifier };
+      result = await postCollection.find(query).toArray();
     }
-    const result = await postCollection.findOne(query);
-    if (!result) {
+    if (!result || (Array.isArray(result) && result.length === 0)) {
       return c.json({ error: 'Post not found' }, 404);
     }
     return c.json(result);
@@ -159,6 +162,7 @@ app.get('/posts/:identifier', async (c) => {
     return c.json({ error: 'Failed to fetch post' }, 500);
   }
 });
+
 
 // POST
 app.post('/posts', async (c) => {
