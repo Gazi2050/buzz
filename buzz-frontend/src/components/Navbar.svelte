@@ -14,7 +14,7 @@
             <House />
         </a>
         <a
-            href="/"
+            href="/my-post"
             class="transition-transform transform hover:scale-125 duration-300 p-[6px] hover:bg-white hover:text-black rounded-full"
         >
             <Layers />
