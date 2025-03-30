@@ -15,6 +15,7 @@
         upvote = 0,
         downvote = 0,
         comments = 0,
+        header = false,
     } = $props();
 </script>
 
@@ -22,20 +23,25 @@
     <article
         class="bg-gradient-to-b from-zinc-900 to-black rounded-3xl border border-gray-700 p-8 shadow-2xl"
     >
-        <!-- Header: Profile + Username -->
-        <header class="flex items-center gap-4 mb-6">
-            <div
-                class="w-16 h-16 rounded-full flex justify-center items-center shadow-lg"
-                style="background-color: {profileColor};"
-            >
-                <User size={40} class="text-black" />
-            </div>
-            <div>
-                <h2 class="text-2xl font-semibold text-white">{username}</h2>
-                <p class="text-sm text-gray-500 mt-1 font-medium">{time}</p>
-            </div>
-        </header>
-
+        {#if header === true}
+            <!-- Header: Profile + Username -->
+            <header class="flex items-center gap-4 mb-6">
+                <div
+                    class="w-16 h-16 rounded-full flex justify-center items-center shadow-lg"
+                    style="background-color: {profileColor};"
+                >
+                    <User size={40} class="text-black" />
+                </div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-white">
+                        {username}
+                    </h2>
+                    <p class="text-sm text-gray-500 mt-1 font-medium">{time}</p>
+                </div>
+            </header>
+        {:else}
+            <p class="text-sm text-gray-400 font-medium">{time}</p>
+        {/if}
         <!-- Blog Content -->
         <section>
             <h1 class="text-4xl font-bold text-white mb-4">{title}</h1>

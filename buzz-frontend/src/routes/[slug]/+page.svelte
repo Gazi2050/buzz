@@ -20,6 +20,7 @@
         <Error />
     {:else if $query.isSuccess}
         <BlogDetails
+            header={true}
             username={$query?.data?.username}
             profileColor={$query?.data?.profileColor}
             time={moment($query?.data?.time).local().fromNow()}
