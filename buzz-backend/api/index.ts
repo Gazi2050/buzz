@@ -1,6 +1,6 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb'
+import { MongoClient, ObjectId, ReturnDocument, ServerApiVersion } from 'mongodb'
 import { cors } from 'hono/cors'
 import 'dotenv/config'
 import { handle } from 'hono/vercel'
@@ -174,6 +174,45 @@ app.post('/posts', async (c) => {
     return c.json({ error: 'Failed to insert post' }, 500)
   }
 })
+
+// Vote (upvote or downvote) for a post
+app.put('/Vote/:id', async (c) => {
+  try {
+    const id = c.req.param('id');
+    const { username, type } = await c.req.json();
+
+    if (!ObjectId.isValid(id)) {
+      return c.json({ error: 'Invalid ID format' }, 400);
+    }
+    if (!username || !type || !['up', 'down'].includes(type)) {
+      return c.json({ error: 'Invalid vote data' }, 400);
+    }
+    const query = { _id: new ObjectId(id) };
+    const postData = await postCollection.findOne(query);
+
+    if (!postData) {
+      return c.json({ error: 'Post not found' }, 404);
+    }
+
+    const updatePost: any = {};
+    updatePost.$pull = { "vote.voter": { username } };
+
+    // increment/decrement
+    if (type === 'up') {
+      updatePost.$inc = { "vote.upvote": 1 };
+      updatePost.$push = { "vote.voter": { username, type: "up" } };
+    } else if (type === 'down') {
+      updatePost.$inc = { "vote.downvote": 1 };
+      updatePost.$push = { "vote.voter": { username, type: "down" } };
+    }
+    const option = { returnDocument: ReturnDocument.AFTER };
+    const updatedPost = await postCollection.findOneAndUpdate(query, updatePost, option);
+    return c.json(updatedPost);
+  } catch (error) {
+    console.error('Error updating post:', error);
+    return c.json({ error: 'Failed to update post' }, 500);
+  }
+});
 
 // for Vercel
 export const GET = handle(app);
