@@ -5,12 +5,12 @@
 </script>
 
 <div
-    class="bg-transparent backdrop-blur-lg fixed top-0 right-0 left-0 py-4 flex justify-center z-50"
+    class="fixed top-0 right-0 left-0 flex justify-center items-center z-50 mt-3"
 >
     <div
-        class="max-w-[1450px] w-full flex justify-between items-center px-6 md:px-16 lg:px-32"
+        class="max-w-[1230px] w-full flex justify-between items-center border border-gray-800 px-3 py-3 rounded-xl mx-1 bg-gray-800/30"
     >
-        <a href="/" class="text-4xl lg:text-5xl font-bold text-[#6AFF33]">
+        <a href="/" class="text-4xl font-bold text-[#6AFF33] -mt-[9px]">
             Buzz
         </a>
         {#if $isAuthenticated === true}

@@ -163,7 +163,6 @@ app.get('/posts/:identifier', async (c) => {
   }
 });
 
-
 // POST
 app.post('/posts', async (c) => {
   try {
