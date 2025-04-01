@@ -6,7 +6,7 @@
     import { toast } from "svelte-sonner";
 
     async function handleSubmit(postData: Post) {
-        console.log("Post submitted:", postData);
+        // console.log("Post submitted:", postData);
         const success = await createPost(postData);
         if (success) {
             toast.success(`Post created successfully!`);

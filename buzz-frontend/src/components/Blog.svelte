@@ -7,6 +7,7 @@
         MessageSquareMore,
         User,
     } from "lucide-svelte";
+    import type { MouseEventHandler } from "svelte/elements";
 
     let {
         username = "Anonymous",
@@ -20,6 +21,12 @@
         comments = 0,
         header = false,
         publicLink = false,
+        handleUpVote = ((
+            event: MouseEvent,
+        ) => {}) as MouseEventHandler<HTMLButtonElement>,
+        handleDownVote = ((
+            event: MouseEvent,
+        ) => {}) as MouseEventHandler<HTMLButtonElement>,
     } = $props();
 
     let minimumChar = 120;
@@ -71,6 +78,7 @@
     >
         <div class="flex gap-4">
             <button
+                onclick={handleUpVote}
                 class="flex items-center gap-2 text-gray-400 hover:text-green-400 transition duration-200 ease-in-out"
             >
                 <ArrowBigUp strokeWidth={1.5} class="w-6 h-6" />
@@ -78,6 +86,7 @@
             </button>
             <div class="p-[0.5px] bg-gray-700"></div>
             <button
+                onclick={handleDownVote}
                 class="flex items-center gap-2 text-gray-400 hover:text-red-400 transition duration-200 ease-in-out"
             >
                 <ArrowBigDown strokeWidth={1.5} class="w-6 h-6" />

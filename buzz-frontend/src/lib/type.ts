@@ -21,6 +21,6 @@ export interface Post {
 
 export interface VoteData {
     postId: string;
-    username: string;
+    username: string | null;
     type: string
 }

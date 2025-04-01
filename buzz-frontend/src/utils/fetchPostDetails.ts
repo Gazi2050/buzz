@@ -8,7 +8,7 @@ export async function fetchPostDetails(id: string) {
             throw new Error("Network response was not ok");
         }
         const posts = await response.json();
-        console.log("Fetched users:", posts);
+        // console.log("Fetched users:", posts);
         return posts || null;
     } catch (error) {
         console.error("Error fetching posts:", error);
