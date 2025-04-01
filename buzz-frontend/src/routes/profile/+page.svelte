@@ -16,7 +16,6 @@
         refetchIntervalInBackground: true,
         enabled: !!$currentUser,
     });
-
     $: userData = $query.isSuccess ? $query.data : null;
     $: username = userData?.username ?? "";
     $: password = userData?.password ?? "";

@@ -18,3 +18,9 @@ export interface Post {
     };
     comments?: { username?: string; text?: string; time?: string }[];
 }
+
+export interface VoteData {
+    postId: string;
+    username: string;
+    type: string
+}
