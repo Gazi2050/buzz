@@ -1,40 +1,15 @@
 <script lang="ts">
     import { User } from "lucide-svelte";
     import Button from "./Button.svelte";
-    import { storedUser } from "$lib/authStore";
-    import moment from "moment";
-    import type { CommentData } from "$lib/type";
-    import { page } from "$app/state";
     import { addComment } from "@utils/addComment";
 
-    let postId = page.params.slug;
-    let username = "Anonymous";
-    let userColor = "#6AFF33";
     let text = $state("");
-    let errorMessage = $state<string | null>(null);
     let isSubmitting = $state(false);
     let formElement: HTMLFormElement;
-    async function handleSubmit(event: Event) {
+
+    function handleSubmit(event: Event) {
         event.preventDefault();
-        const commentData: CommentData = {
-            postId,
-            username,
-            userColor,
-            text,
-            time: moment().utc().toISOString(),
-        };
-
-        try {
-            isSubmitting = true;
-            errorMessage = null;
-
-            const result = await addComment(commentData);
-            console.log("Comment added successfully:", commentData);
-            formElement.reset();
-        } catch (error) {
-            console.error("Submission error:", error);
-            return;
-        }
+        addComment(text);
     }
 </script>
 
@@ -49,11 +24,6 @@
             placeholder="Add a comment..."
             disabled={isSubmitting}
         ></textarea>
-
-        {#if errorMessage}
-            <p class="text-red-500 text-sm mt-2">{errorMessage}</p>
-        {/if}
-
         <div class="flex justify-end mt-2">
             <Button
                 type="submit"

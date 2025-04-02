@@ -16,7 +16,7 @@ export interface Post {
         downvote: number;
         voter?: { username?: string, type?: string }[];
     };
-    comments?: { user?: string; userColor?: string; text?: string; time?: string }[];
+    comments?: { username?: string; profileColor?: string; text?: string; time?: string }[];
 }
 
 export interface VoteData {
@@ -27,8 +27,8 @@ export interface VoteData {
 
 export interface CommentData {
     postId: string;
-    username?: string;
-    userColor?: string;
+    username: string;
+    profileColor: string;
     text: string;
     time: string;
 }

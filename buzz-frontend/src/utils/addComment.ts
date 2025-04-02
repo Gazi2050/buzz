@@ -1,50 +1,38 @@
-import type { CommentData } from "$lib/type";
 import { COMMENT_API_URL } from "$lib/url";
+import moment from "moment";
 import { fetchUsers } from "./fetchUsers";
+import { page } from "$app/state";
+import type { CommentData } from "$lib/type";
 
-export async function addComment(data: CommentData): Promise<CommentData> {
+export async function addComment(text: string): Promise<void> {
     try {
-        // Basic input validation
-        if (!data.postId) {
-            throw new Error("postId is required to add a comment");
-        }
-
         // Fetch user data
-        const userData = await fetchUsers();
-        if (!userData || !userData.username || !userData.userColor) {
-            throw new Error("User data incomplete. Unable to add comment.");
-        }
+        const user = await fetchUsers();
+        const { username, profileColor } = user;
 
-        // Construct request payload
-        const requestData = {
-            postId: data.postId,
-            username: userData.username,
-            userColor: userData.userColor,
-            text: data.text,
-            time: data.time,
+        // Prepare comment data
+        const time = moment().utc().toISOString();
+        const postId = page.params.slug;
+        const commentData: CommentData = {
+            postId,
+            username,
+            profileColor,
+            text,
+            time,
         };
-
-        console.log(requestData);
-        const url = `${COMMENT_API_URL}/${data.postId}`;
-
-        const response = await fetch(url, {
+        const response = await fetch(`${COMMENT_API_URL}/${postId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(requestData),
+            body: JSON.stringify(commentData),
         });
-
         if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Failed to add comment: ${response.status} - ${errorText}`);
+            throw new Error(`Failed to add comment: ${response.status} ${response.statusText}`);
         }
-
-        const result = await response.json();
-        // Optional: Add runtime type checking here if needed
-        return result as CommentData;
+        console.log("Comment added:", response);
     } catch (error) {
-        console.error("Error adding comment:", error);
+        console.error("Error in addComment:", error);
         throw error;
     }
 }

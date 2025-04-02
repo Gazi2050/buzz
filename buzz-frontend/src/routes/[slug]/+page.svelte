@@ -11,8 +11,8 @@
     const query = createQuery({
         queryKey: ["post"],
         queryFn: () => fetchPostDetails(id),
-        refetchInterval: 10,
-        refetchIntervalInBackground: true,
+        // refetchInterval: 10,
+        // refetchIntervalInBackground: true,
     });
 </script>
 
