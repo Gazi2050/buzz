@@ -205,7 +205,7 @@ app.put('/vote/:id', async (c) => {
     if (existingVote) {
       // console.log('Existing vote found:', existingVote);
       if (existingVote.type === type) {
-        return c.json({ error: 'You have already voted this way' }, 400);
+        return c.json({ message: 'Vote already registered' }, 200);
       }
       updatePost.$pull = { 'vote.voter': { username } };
       if (existingVote.type === 'up') {
