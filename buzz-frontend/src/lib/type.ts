@@ -16,11 +16,19 @@ export interface Post {
         downvote: number;
         voter?: { username?: string, type?: string }[];
     };
-    comments?: { username?: string; text?: string; time?: string }[];
+    comments?: { user?: string; userColor?: string; text?: string; time?: string }[];
 }
 
 export interface VoteData {
     postId: string;
     username: string | null;
     type: string
+}
+
+export interface CommentData {
+    postId: string;
+    username?: string;
+    userColor?: string;
+    text: string;
+    time: string;
 }

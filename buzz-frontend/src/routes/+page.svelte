@@ -32,7 +32,7 @@
                 blogId={post?._id}
                 upvote={post?.vote?.upvote}
                 downvote={post?.vote?.downvote}
-                comments={post?.comments?.length}
+                comments={post?.vote?.comments?.length}
                 handleUpVote={() => handleUpVote(post?._id)}
                 handleDownVote={() => handleDownVote(post?._id)}
             />

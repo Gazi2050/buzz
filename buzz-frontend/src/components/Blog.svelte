@@ -12,7 +12,7 @@
     let {
         username = "Anonymous",
         profileColor = "#6AFF33",
-        time = "Mar 20, 2025",
+        time = "a hour ago",
         title = "This is the Title",
         description = "Hello, this is a test post",
         blogId = "1",

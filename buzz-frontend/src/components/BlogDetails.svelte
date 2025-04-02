@@ -6,6 +6,7 @@
         User,
     } from "lucide-svelte";
     import type { MouseEventHandler } from "svelte/elements";
+    import Comments from "./Comments.svelte";
     let {
         id = "1",
         username = "Anonymous",
@@ -92,4 +93,6 @@
             </button>
         </footer>
     </article>
+    <!-- Comments -->
+    <Comments />
 </div>
