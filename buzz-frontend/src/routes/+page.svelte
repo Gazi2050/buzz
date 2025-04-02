@@ -1,11 +1,10 @@
 <script lang="ts">
-    import { storedUser } from "$lib/authStore";
     import Blog from "@components/Blog.svelte";
     import Error from "@components/Error.svelte";
     import Loading from "@components/Loading.svelte";
     import { createQuery } from "@tanstack/svelte-query";
     import { fetchPosts } from "@utils/fetchPosts";
-    import { voteOnPost } from "@utils/voteOnPost";
+    import { handleDownVote, handleUpVote } from "@utils/handleVote";
     import moment from "moment";
     const query = createQuery({
         queryKey: ["posts"],
@@ -13,34 +12,6 @@
         refetchInterval: 10,
         refetchIntervalInBackground: true,
     });
-
-    const handleUpVote = async (postId: string) => {
-        const voteData = {
-            postId: postId,
-            username: storedUser,
-            type: "up",
-        };
-        try {
-            const result = await voteOnPost(voteData);
-            // console.log(result);
-        } catch (error) {
-            console.error("Failed to upvote:", error);
-        }
-    };
-
-    const handleDownVote = async (postId: string) => {
-        const voteData = {
-            postId: postId,
-            username: storedUser,
-            type: "down",
-        };
-        try {
-            const result = await voteOnPost(voteData);
-            console.log(result);
-        } catch (error) {
-            console.error("Failed to upvote:", error);
-        }
-    };
 </script>
 
 {#if $query.isLoading}

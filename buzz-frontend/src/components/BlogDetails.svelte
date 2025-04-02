@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
     import {
         ArrowBigDown,
         ArrowBigUp,
         MessageSquareMore,
         User,
     } from "lucide-svelte";
+    import type { MouseEventHandler } from "svelte/elements";
     let {
         id = "1",
         username = "Anonymous",
@@ -16,6 +17,12 @@
         downvote = 0,
         comments = 0,
         header = false,
+        handleUpVote = ((
+            event: MouseEvent,
+        ) => {}) as MouseEventHandler<HTMLButtonElement>,
+        handleDownVote = ((
+            event: MouseEvent,
+        ) => {}) as MouseEventHandler<HTMLButtonElement>,
     } = $props();
 </script>
 
@@ -58,6 +65,7 @@
         >
             <div class="flex gap-6">
                 <button
+                    onclick={handleUpVote}
                     class="flex items-center gap-2 text-gray-400 hover:text-green-400 transition ease-in-out duration-200"
                 >
                     <ArrowBigUp strokeWidth={1.5} size={32} />
@@ -65,6 +73,7 @@
                 </button>
                 <div class="p-[0.5px] bg-gray-700"></div>
                 <button
+                    onclick={handleDownVote}
                     class="flex items-center gap-2 text-gray-400 hover:text-red-400 transition ease-in-out duration-200"
                 >
                     <ArrowBigDown strokeWidth={1.5} size={32} />
