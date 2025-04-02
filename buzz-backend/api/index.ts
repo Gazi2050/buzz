@@ -234,6 +234,44 @@ app.put('/vote/:id', async (c) => {
   }
 });
 
+// comment for a post
+app.put('/comment/:id', async (c) => {
+  try {
+    const id = c.req.param('id');
+    const { username, text, time } = await c.req.json();
+
+    if (!ObjectId.isValid(id)) {
+      return c.json({ error: 'Invalid ID format' }, 400);
+    }
+
+    if (!username || !text || !time) {
+      return c.json({ error: 'Missing required fields: username, text, or time' }, 400);
+    }
+
+    const query = { _id: new ObjectId(id) };
+    const postData = await postCollection.findOne(query);
+    if (!postData) {
+      return c.json({ error: 'Post not found' }, 404);
+    }
+    const comment = { username, userColor, text, time };
+    const updatePost = {
+      $push: { comments: comment }
+    };
+
+    const option = { returnDocument: 'after' };
+    const updatedPost = await postCollection.findOneAndUpdate(query, updatePost, option);
+
+    if (!updatedPost) {
+      return c.json({ error: 'Failed to add comment' }, 500);
+    }
+
+    return c.json(updatedPost, 200);
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    return c.json({ error: 'Failed to add comment' }, 500);
+  }
+});
+
 
 // for Vercel
 export const GET = handle(app);
