@@ -238,22 +238,30 @@ app.put('/vote/:id', async (c) => {
 app.put('/comment/:id', async (c) => {
   try {
     const id = c.req.param('id');
-    const { username, text, time } = await c.req.json();
+    const { username, profileColor, text, time } = await c.req.json();
 
     if (!ObjectId.isValid(id)) {
       return c.json({ error: 'Invalid ID format' }, 400);
     }
 
-    if (!username || !text || !time) {
-      return c.json({ error: 'Missing required fields: username, text, or time' }, 400);
+    if (!username) {
+      return c.json({ error: 'Missing required field: username' }, 400);
     }
-
+    if (!profileColor) {
+      return c.json({ error: 'Missing required field: profileColor' }, 400);
+    }
+    if (!text) {
+      return c.json({ error: 'Missing required field: text' }, 400);
+    }
+    if (!time) {
+      return c.json({ error: 'Missing required field: time' }, 400);
+    }
     const query = { _id: new ObjectId(id) };
     const postData = await postCollection.findOne(query);
     if (!postData) {
       return c.json({ error: 'Post not found' }, 404);
     }
-    const comment = { username, userColor, text, time };
+    const comment = { username, profileColor, text, time };
     const updatePost = {
       $push: { comments: comment }
     };
