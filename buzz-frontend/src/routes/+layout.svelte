@@ -22,15 +22,16 @@
 </script>
 
 <QueryClientProvider client={queryClient}>
-	<!-- <Frontpage>.....</Frontpage> -->
-	<div>
-		{#if !excludedPaths.includes($page.url.pathname)}
-			<Header />
-		{/if}
-		{@render children()}
-		{#if !isExcludedPath($page.url.pathname) && $isAuthenticated === true}
-			<Navbar />
-		{/if}
-		<Toaster position="top-center" richColors />
-	</div>
+	<Frontpage
+		><div>
+			{#if !excludedPaths.includes($page.url.pathname)}
+				<Header />
+			{/if}
+			{@render children()}
+			{#if !isExcludedPath($page.url.pathname) && $isAuthenticated === true}
+				<Navbar />
+			{/if}
+			<Toaster position="top-center" richColors />
+		</div>
+	</Frontpage>
 </QueryClientProvider>

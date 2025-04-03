@@ -32,3 +32,5 @@ export interface CommentData {
     text: string;
     time: string;
 }
+
+export type Position = "top" | "bottom" | "left" | "right";

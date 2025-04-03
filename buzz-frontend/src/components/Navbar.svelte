@@ -1,6 +1,7 @@
 <script lang="ts">
     import { signout } from "@utils/auth";
-    import { Bell, House, Layers, LogOut, Plus } from "lucide-svelte";
+    import { House, Layers, LogOut, Plus, User } from "lucide-svelte";
+    import Tooltip from "./Tooltip.svelte";
 </script>
 
 <div
@@ -8,37 +9,38 @@
 >
     <div class=" p-4 bg-gray-800/30 rounded-xl shadow-lg text-white z-50">
         <div class="flex justify-evenly items-center gap-3 sm:gap-5">
-            <a
-                href="/"
-                class="transition-transform transform hover:scale-125 duration-300 p-[6px] hover:bg-white hover:text-black rounded-full"
-            >
-                <House />
-            </a>
-            <a
-                href="/my-post"
-                class="transition-transform transform hover:scale-125 duration-300 p-[6px] hover:bg-white hover:text-black rounded-full"
-            >
-                <Layers />
-            </a>
+            <Tooltip text="Feed">
+                <a href="/">
+                    <House />
+                </a>
+            </Tooltip>
+
+            <Tooltip text="Post">
+                <a href="/my-post">
+                    <Layers />
+                </a>
+            </Tooltip>
             <a
                 href="/create-post"
                 class="transition-transform transform hover:scale-125 duration-300"
             >
                 <Plus size={35} class="bg-white text-black rounded-full" />
             </a>
-            <a
-                href="/"
-                class="transition-transform transform hover:scale-125 duration-300 p-[6px] hover:bg-white hover:text-black rounded-full"
-            >
-                <Bell />
-            </a>
-            <button
-                onclick={signout}
-                class="transition-transform transform hover:scale-125 duration-300 p-[6px] hover:bg-white hover:text-black rounded-full"
-            >
-                <!-- <Sun /> -->
-                <LogOut />
-            </button>
+
+            <Tooltip text="Profile">
+                <a href="/profile">
+                    <User />
+                </a>
+            </Tooltip>
+            <Tooltip text="Logout">
+                <button
+                    onclick={signout}
+                    class="flex justify-center items-center"
+                >
+                    <!-- <Sun /> -->
+                    <LogOut />
+                </button>
+            </Tooltip>
         </div>
     </div>
 </div>
