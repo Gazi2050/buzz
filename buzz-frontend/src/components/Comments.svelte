@@ -40,8 +40,7 @@
 
 {#if commentData}
     {#each commentData as comment}
-        <!-- comment list (static example) -->
-        {console.log("Rendering comment:", comment)}
+        <!-- comment list -->
         <div class="flex justify-start items-center gap-2 mt-5">
             <div
                 class="w-12 h-12 rounded-full flex justify-center items-center shadow-lg"
