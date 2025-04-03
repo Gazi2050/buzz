@@ -1,8 +1,10 @@
 <script lang="ts">
-    import { User } from "lucide-svelte";
+    import { Proportions, User } from "lucide-svelte";
     import Button from "./Button.svelte";
     import { addComment } from "@utils/addComment";
+    import moment from "moment";
 
+    let { commentData } = $props();
     let text = $state("");
     let isSubmitting = $state(false);
     let formElement: HTMLFormElement;
@@ -35,17 +37,26 @@
     </form>
 </div>
 
-<!-- comment list (static example) -->
-<div class="flex justify-start items-center gap-2 mt-5">
-    <div
-        class="w-12 h-12 rounded-full flex justify-center items-center shadow-lg"
-        style="background-color: #6AFF33;"
-    >
-        <User size={30} />
-    </div>
-    <div class="bg-gray-800/60 text-white rounded-xl px-4 py-2">
-        <p class="text-base font-semibold">Anonymous</p>
-        <p>This is comment</p>
-    </div>
-</div>
-<span class="text-gray-400 ml-[65px] text-sm">an hour ago</span>
+{#if commentData}
+    {#each commentData as comment}
+        <!-- comment list (static example) -->
+        {console.log("Rendering comment:", comment)}
+        <div class="flex justify-start items-center gap-2 mt-5">
+            <div
+                class="w-12 h-12 rounded-full flex justify-center items-center shadow-lg"
+                style="background-color:{comment?.profileColor};"
+            >
+                <User size={30} />
+            </div>
+            <div class="bg-gray-800/60 text-white rounded-xl px-4 py-2">
+                <p class="text-base font-semibold">{comment?.username}</p>
+                <p>{comment?.text}</p>
+            </div>
+        </div>
+        <span class="text-gray-400 ml-[65px] text-sm"
+            >{moment(comment?.time).local().fromNow()}</span
+        >
+    {/each}
+{:else}
+    null
+{/if}

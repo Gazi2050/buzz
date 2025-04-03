@@ -16,8 +16,8 @@
         description = "Hello, this is a test post",
         upvote = 0,
         downvote = 0,
-        comments = 0,
         header = false,
+        commentData = [],
         handleUpVote = ((
             event: MouseEvent,
         ) => {}) as MouseEventHandler<HTMLButtonElement>,
@@ -89,10 +89,10 @@
                     size={32}
                     class="mt-[3px]"
                 />
-                <span class="text-lg font-semibold">{comments}</span>
+                <span class="text-lg font-semibold">{commentData?.length}</span>
             </button>
         </footer>
     </article>
     <!-- Comments -->
-    <Comments />
+    <Comments {commentData} />
 </div>

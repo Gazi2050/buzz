@@ -11,8 +11,8 @@
     const query = createQuery({
         queryKey: ["post"],
         queryFn: () => fetchPostDetails(id),
-        // refetchInterval: 10,
-        // refetchIntervalInBackground: true,
+        refetchInterval: 50,
+        refetchIntervalInBackground: true,
     });
 </script>
 
@@ -31,9 +31,9 @@
             description={$query?.data?.description}
             upvote={$query?.data?.vote?.upvote}
             downvote={$query?.data?.vote?.downvote}
-            comments={$query?.data?.comments.length}
             handleUpVote={() => handleUpVote($query?.data?._id)}
             handleDownVote={() => handleDownVote($query?.data?._id)}
+            commentData={$query?.data?.comments}
         />
     {/if}
 </div>

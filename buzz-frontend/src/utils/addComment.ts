@@ -30,7 +30,7 @@ export async function addComment(text: string): Promise<void> {
         if (!response.ok) {
             throw new Error(`Failed to add comment: ${response.status} ${response.statusText}`);
         }
-        console.log("Comment added:", response);
+        console.log("Comment added:", commentData);
     } catch (error) {
         console.error("Error in addComment:", error);
         throw error;
