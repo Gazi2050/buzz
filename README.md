@@ -1,8 +1,8 @@
 # 🚀 Buzz – Anonymous Blogging Platform  
 <p align="center">
-  <img src="https://img.shields.io/badge/Frontend-Svelte-orange?logo=svelte&logoColor=white" width="120" />
-  <img src="https://img.shields.io/badge/Styling-Tailwind-blue?logo=tailwindcss&logoColor=white" width="120" />
-  <img src="https://img.shields.io/badge/Backend-Hono-orange?logo=hono&logoColor=white" width="110" />
+  <img src="https://img.shields.io/badge/Frontend-Svelte-orange?logo=svelte&logoColor=white" width="140" />
+  <img src="https://img.shields.io/badge/Styling-Tailwind-blue?logo=tailwindcss&logoColor=white" width="140" />
+  <img src="https://img.shields.io/badge/Backend-Hono-orange?logo=hono&logoColor=white" width="130" />
 </p>
 
 **Buzz** is a minimalistic, text-based anonymous blogging platform designed for users who want to share their thoughts without revealing their identity. With a **modern UI**, **custom authentication**. Buzz ensures a **privacy-focused** and **seamless blogging experience**.  
