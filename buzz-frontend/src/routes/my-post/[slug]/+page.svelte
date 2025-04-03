@@ -10,6 +10,8 @@
     const query = createQuery({
         queryKey: ["myPost"],
         queryFn: () => fetchPostDetails(id),
+        refetchInterval: 10,
+        refetchIntervalInBackground: true,
     });
 </script>
 
@@ -27,7 +29,7 @@
             description={$query?.data?.description}
             upvote={$query?.data?.upvote}
             downvote={$query?.data?.downvote}
-            comments={$query?.data?.comments.length}
+            commentData={$query?.data?.comments}
         />
     {/if}
 </div>

@@ -43,7 +43,7 @@
                 class="w-14 h-14 rounded-full flex justify-center items-center shadow-md"
                 style="background-color: {profileColor};"
             >
-                <User color={"black"} size={33} />
+                <User color="black" size={33} />
             </div>
             <div>
                 <h2 class="text-lg font-semibold text-white">{username}</h2>

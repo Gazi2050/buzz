@@ -18,7 +18,11 @@ export async function signup(credentials: Auth): Promise<boolean> {
         if (!response.ok) {
             throw new Error("Failed to create user");
         }
+        goto("/");
 
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
         return true; // Success
     } catch (error) {
         console.error("Signup error:", error);
@@ -49,7 +53,10 @@ export async function signin(credentials: Auth): Promise<{ username: string } | 
 
         currentUser.set(matchingUser.username);
         isAuthenticated.set(true);
-
+        goto("/");
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
         return { username: matchingUser.username };
     } catch (error) {
         console.error("Signin error:", error);
@@ -64,6 +71,7 @@ export function signout(): void {
     toast("Signed out successfully!");
     // Log the current store value instead of storedUser
     // console.log(typeof get(currentUser), get(currentUser));
+    window.location.reload();
     goto("/");
 }
 

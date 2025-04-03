@@ -19,7 +19,7 @@
 {:else if $query.isError}
     <Error />
 {:else if $query.isSuccess}
-    <div class="flex flex-col py-3 gap-3 pt-[100px] mx-1 h-full">
+    <div class="flex flex-col py-3 gap-3 pt-[95px] mx-1 h-full">
         {#each $query.data as post}
             <Blog
                 header={true}

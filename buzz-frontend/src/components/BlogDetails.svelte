@@ -8,7 +8,6 @@
     import type { MouseEventHandler } from "svelte/elements";
     import Comments from "./Comments.svelte";
     let {
-        id = "1",
         username = "Anonymous",
         profileColor = "#6AFF33",
         time = "a hour ago",

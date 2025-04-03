@@ -49,11 +49,12 @@
         <div class="text-center">
             <h1 class="text-3xl font-semibold text-white mb-3">
                 {isSignUp ? "Welcome to" : "Continue to"}
-                <span
+                <a
+                    href="/"
                     class="bg-zinc-800 text-[#6AFF33] px-[5px] pb-[3px] rounded-lg"
                 >
                     Buzz
-                </span>
+                </a>
             </h1>
             <p class="text-gray-500 text-base md:text-lg font-medium">
                 {isSignUp

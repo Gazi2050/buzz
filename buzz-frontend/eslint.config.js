@@ -14,23 +14,29 @@ export default ts.config(
   ...svelte.configs.recommended,
   {
     languageOptions: {
-	  globals: {
-	    ...globals.browser,
-	    ...globals.node
-	  }
-	}
+      globals: {
+        ...globals.browser,
+        ...globals.node
+      }
+    }
   },
   {
     files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
     ignores: ["eslint.config.js", "svelte.config.js"],
 
     languageOptions: {
-	  parserOptions: {
-	    projectService: true,
-	    extraFileExtensions: ['.svelte'],
-	    parser: ts.parser,
-	    svelteConfig
-	  }
-	}
+      parserOptions: {
+        projectService: true,
+        extraFileExtensions: ['.svelte'],
+        parser: ts.parser,
+        svelteConfig
+      }
+    }
+  },
+  {
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+      'svelte/require-each-key': 'off'
+    }
   }
 );

@@ -12,6 +12,7 @@
     function handleSubmit(event: Event) {
         event.preventDefault();
         addComment(text);
+        formElement.reset();
     }
 </script>
 

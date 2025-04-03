@@ -9,6 +9,8 @@
     const query = createQuery({
         queryKey: ["myPosts"],
         queryFn: () => fetchMyPost(storedUser),
+        refetchInterval: 10,
+        refetchIntervalInBackground: true,
     });
 </script>
 
